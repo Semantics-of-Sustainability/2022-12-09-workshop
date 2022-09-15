@@ -1,6 +1,8 @@
 # Workshop on Dutch language models for historical research
 This workshop will be held on Dec 9th, 2022 at the Netherlands eScience Center. 
 
+If you're interested in attending the workshop, please contact Pim Huijnen ([p.huijnen@uu.nl](p.huijnen@uu.nl)).
+
 ## Description of workshop
 The rise of transformer language models such as BERT has opened up possibilities to use contextualized word embeddings for downstream text processing tasks. This includes applications in humanities research, such as investigating the conceptual history of a certain topic in a collection of texts. 
 
