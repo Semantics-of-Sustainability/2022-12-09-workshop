@@ -1,0 +1,494 @@
+# How to create (historical) Dutch transformer models
+## A working paper
+
+### Introduction
+
+The rise of transformer language models such as [BERT](https://arxiv.org/abs/1810.04805) has opened up possibilities to use contextualized word embeddings for downstream text processing tasks. This includes applications in humanities research. However, the methods to properly use these models in a humanities and, particularly, a historical context are still very much under development. The aim of this working paper is to present state-of-the-art guidelines to use transformers to study change over time.
+
+
+
+| chapter      | Name    |
+| ------------ | ------- |
+| Introduction |         |
+| 1            | Laura   |
+| 2            | Carsten |
+| 3            | Parisa  |
+| 4             |    Flavio     |
+|       5       |     Pim    |
+| Conclusion            |   |
+
+
+### 1.	What are suitable corpora to base Dutch historical language models on?
+The are various Dutch language models available to train language models on (XXX). However, if the language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets different requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
+
+#### Corpus properties
+One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what corpus size is required for my model? The answer however, is not straigtforward, as it depends on the task and context of the language model (XXX): the pretraining method, the model architecture and the application. XXX EXAMPLES AND REFERENCES. In the objective considered here the language model will use contextualized word embeddings for pretraining, and a transformer model architecture. As the application of the model is to analyse text in historical context, the corpus requires XXX.
+- required size
+- balance/bias
+- representativeness
+- data quality
+- stability in word embeddings(?)
+
+#### Available corpora
+- which, where,license
+
+*Moderator: Laura Ootes*
+
+
+
+Discussion Ideas:
+
+* (Required) Corpus size
+    * Requirements for different tasks, contexts
+        * Depends on architecture
+    * Pre-training from scratch: what is the need to balance different input corpora
+        * Transfer-dilution Trade-off and Curse of Multilinguality in multilingual LMs (Conneau et al. 2020): for a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, but/and adding more languages to training decreases performance after a point. 
+    * Papers:
+        * Li, Z., Wallace, E., Shen, S., Lin, K., Keutzer, K., Klein, D., & Gonzalez, J. (2020, November). Train big, then compress: Rethinking model size for efficient training and inference of transformers. In International Conference on Machine Learning (pp. 5958-5968). PMLR. http://proceedings.mlr.press/v119/li20m/li20m.pdf 
+        * ?
+
+* Licensing issues
+    * How restricted are relevant corpora
+        * Delpher: no redistributing, also no BOW per document (depends on publication date of document)
+    * (How) can we work with them anyway?
+        * Prefer to not work with sensitive data?
+        * what kinds of derived data can be used/distributed?
+        * SANE (SURF): 
+            * an environment to run your scripts/software on protected data via a secure environment
+            * https://www.surf.nl/en/news/sane-secure-data-environment-for-social-sciences-and-humanities
+        * Can you share models trained on restricted data?
+* Corpus balance/bias and representativeness
+    * Diversity of domain, genre, topic, authors, style, time period
+    * How to mix? What are important parameters?
+    * Requirements/recommendations for metadata
+        * Required
+            * Time period
+            * Language domain - Genre / style (news paper, parlementairy etc.)
+            * Size (tokens + bytes)
+            * Source
+            * Identifying metadata
+            * License
+        * Recommended: anything that can be inferred from the data
+            * Document type
+            * Size (number of files, lines)
+            * Quality of OCR/HTR
+            * URL / DOI
+    * Requirements/recommendations for data
+        * File format: text + HTR/OCR output format (with e.g. coordinates)
+        * Date issued
+* List of links of available data sets
+
+| Title | License | URL | Period | Genre | Size (GB) |
+|-|-|-|-|-|-|
+|Delpher newspapers| Permission needed | https://www.delpher.nl/over-delpher/delpher-open-krantenarchief/wat-zit-er-in-het-delpher-open-krantenarchief | 1618-1879 | newspapers, books, periodicals
+|DBNL|Permission needed|https://www.dbnl.org | 1550-present | plays, poetry, novels, letters |
+|VOC+WIC+Notarial deeds HTR |CC-BY-4.0|https://doi.org/10.5281/zenodo.6414086 | 1637-1792 | reports, correspondence |
+|Huygens Resources||https://resources.huygens.knaw.nl |  | 700-present | correspondence, administrative, ... |
+|Resolutions States General || https://republic.huygens.knaw.nl | 1576-1796 | Government decisions, Administrative |
+|NederLab||||
+|Amsterdam City Archives (HTR + Ground Truth)|PD (?)|https://transkribus.eu/r/amsterdam-city-archives | 1578-1811 | Notarial deeds, Administrative|
+| NIBG Radio and television ||| 1870-present | radio transcripts, subtitles |
+| SONAR || https://taalmaterialen.ivdnt.org/download/tstc-sonar-corpus/ | | various |
+| EuroParl (same as Staten Generaal Digitaal) || https://www.statmt.org/europarl/ | | Political discussions, transcripts, Administrative |
+| OSCAR (based on common crawl) ||https://oscar-project.org/||
+| TwNC (multimedia news dataset) ||||
+| Gysseling? Corpus Middel Nederlands / Corpus Oud Nederlands ||||
+| Woordenboek Nederlandse Taal |||... | dictionary |
+| Staten Generaal Digitaal | CC-0-1.0 | https://data.overheid.nl/dataset/staten-generaal-digitaal---koninklijke-bibliotheek | 1814-present | State publications |
+| Taalmaterialen IvdNT | Varies | https://taalmaterialen.ivdnt.org/document-tag/corpus/ | | |
+
+
+* How to deal with data of different quality?
+    * Depends on the task
+    * Does it make sense to train models with multiple sizes of lower quality data? Is it 'garbage in, garbage out', or can this help with messy data?
+
+
+* References
+    * M. van der Wees. [What’s in a Domain?  Towards Fine-Grained Adaptation for Machine Translation](https://staff.fnwi.uva.nl/m.derijke/wp-content/papercite-data/pdf/van-der-wees-phd-thesis-2017.pdf).  PhD thesis, Universiteit van Amsterdam, 2017
+    * [Conneau et al. 2020. Unsupervised Cross-lingual Representation Learning at Scale](https://arxiv.org/pdf/1911.02116v2.pdf)
+    * [Abadji et al. 2022. Towards a Cleaner Document-Oriented Multilingual Crawled Corpus](https://arxiv.org/pdf/2201.06642.pdf)
+    * [Ortis Suárez et al 2019. Asynchronous Pipeline for Processing Huge Corpora
+on Medium to Low Resource Infrastructures](https://arxiv.org/pdf/2201.06642.pdf): OSCAR
+
+
+
+These are things that came up in the group on evaluation; Flavio has added them here but just delete them if they do not fit/are already covered
+- Oxford English Dictionary
+    - detecting word sense
+    - word sense disambiguation
+    - can dictionaries be used to measure the change in the word sense?
+        - unclear what it means if a word is not documented
+        - a [plot](https://github.com/emanjavacas/macberth-eval/blob/main/images/period-plots.pdf) documenting the distribution of senses over time based on OED data (possibility to use for lexical change?)
+- WNT: Woordenboek der Nederlandsche Taal
+- [LChange22](https://languagechange.org/events/2022-acl-lchange/)
+- Stability of models [NAACL 2018](https://aclanthology.org/N18-1190/)
+
+
+
+### 2.	What are suitable model architectures and sizes?
+
+#### Overview
+
+Since the introduction of Transformer-based language models [TODO: ref], starting most prominently with Bert [TODO: ref], numerous model variations based on the same architecture have developed.
+Despite the various differences between Bert, RoBerta [TODO: ref] and their many other derivations, pracitioners oftentimes do not see noticable differences originating from choosing one of those flavours over the other.
+The performance of a language model depends on many aspects that are not related to architecture at all, most importantly the input data and the specifics of a downstream task.
+Training large language models is expensive though, so the potential benefits of optimising the architecture empirically is not expected to justify the additional costs.
+Consequently, for instance GysBert [TODO: ref], have chosen a Bert architecture arbitrarily.
+
+In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly, 
+
+
+most notably [TODO: ref], which adds an additional attention matrix for the chronological information.
+This might bring improvements when it comes to tasks for which temporal aspects play a role.
+However, as with other variations in model architecture and training regimes pointed out above, it remains unclear if and under which conditions this really is the case.
+At the same time, the downside is that such specialist models would not necessarily be re-usable.
+
+TempoBert (Rosin et al, 2022), on the other hand, uses a standard Transformers architecture.
+By prepending a string representing a year to each sentence, the model is shown to take the chronological aspect into account when generating contextual word embeddings.
+
+
+#### Data
+
+#### Training Practicalities
+
+#### Multimodality
+
+#### References
+
+Rosin, Guy D., Ido Guy, and Kira Radinsky. “Time Masking for Temporal Language Models.” In Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining, 833–41. Virtual Event AZ USA: ACM, 2022. https://doi.org/10.1145/3488560.3498529.
+
+*Moderator: Carsten Schnober*
+
+
+
+Brainstorming ideas:
+
+* How to incorporate temporal information?
+    * Adapt model architecture to temporal use (explicit)
+    * Add temporal context to text sequences (implicit)
+    * Use model and text without changes
+
+
+* Why are most (historical) language models based on BERT?
+    * Academic models lag behind large state-of-the-art models developed by/for industry
+    * E.g. GysBert started 2 years ago
+    * Roberta is only a small change in training regime, and outperforms BERT in almost all NLP tasks
+        * Uses token pieces in a different way
+        * Small basic vocabulary, relies more on word pieces
+        * Might be particularly benefitial for historical data (with spelling variations)
+        * Very succesful on toxic language detection
+    * DeBerta disentangles attention mechanism
+        * Does well on cause-effect relationships
+
+
+#### Model Selection
+
+* get intuition from dataset
+    * e.g. hospital notes fits Roberta training regime
+* match own data properties to previously reported model / data sizes
+* Importance of tokenizers
+    * depends on variation within data
+    * what is the distribution of labor between tokenizer and model itself?
+        * Can we generalize a pre-trained model by "freezing" tokenizer?
+    * Tokenization step introduces specific bias before starting to train model
+    * Character-based models do not seem to be working well; also hard to transform to HuggingFace format for reusability
+* Normalisation
+    * should not normalise before training, because induces risk of adding skew
+    * spelling variation occurs in contexts of words to be normalised
+    * Variation spreads across time periods and regions
+    * Capitalization is often not consistent
+
+#### How to evaluate?
+
+Ideally, re-train models on same data as GysBert
+
+* Most NLP evaluation sets are based on modern language data
+* Predict time period
+    * (semi-)automatically generate labeled data set
+    * Structured labeling for evaluation (-> data presented by Marijn)
+    * What about problem of variation
+    * Shuffle diachronic data to create a baseline and filter out model-induced change
+
+TODO: look up numbers of available data set sizes (contemporary/internet vs. historic)
+
+
+#### Architectures
+
+* Temporal attention
+    * could generalise to any external knowledge available (e.g. region)
+* Prepending historical information (and use Transformer)
+    * also done for audio transcription
+* Stable Diffusion?
+    * use on scans?
+    * cf. CNNs
+    * how to add noise to text?
+
+
+
+* Using models from image processing (CNN, Diffusion)?
+    * Convolutional model to slide over word embeddings for reconstruction of word use in particular context
+        * Not a full language model, but trained on specific aspects of language
+    * (How) can we use diffusion models for text-only?
+        * Important question in light of weaknesses of Transformers
+* GANs, GPT
+
+
+Research project needed for systematically training models on different architectures, hyper-parameters data sets etc., and perform quantitative and qualitative analysis
+
+#### Data
+
+Historic data is limited, there will be no new data
+
+How does model architecture/size relate to training data?
+* How homogenous is the data?
+* what is your domain?
+* what is your task?
+* measure quality through perplexity
+* determine lexical variation
+* stylistic variation
+* -> understand how much data is needed
+
+
+
+
+#### Computational costs
+* Alice (Uni Leiden cluster) too slow (queuing)
+* decided to pay for Google Cloud resources
+    * GysBert training on TPU
+    * training time <1 week
+
+#### Relevant Papers
+
+* Neural Scaling Laws paper
+    * Performance plateaus at some point
+    * data has been most important factor
+    * suitable for understanding relative model quality before training on full dataset
+* XML-R paper
+    * low-resource languages profit most from more data
+    * rich languages stop benefitting
+    * ˜250k tokens, 2x number of mBert
+* All Transformer training papers
+    * Not necessarily transparent about negative findings
+* Roberta vs BERT tokenization
+    * byte-level tokenizer vs. word-level tokenizer
+    * increasing computationl cost
+* [ByT5](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00461/110049/ByT5-Towards-a-Token-Free-Future-with-Pre-trained)
+* [CANINE](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00448/109284/Canine-Pre-training-an-Efficient-Tokenization-Free)
+
+### 3.	What are (dis)advantages of pre-training vs. fine-tuning?
+
+Learning in most of NLP systems consists of two levels of training. First a Language Model (LM) with millions of parameters is trained on a large unlabeled corpus. Then the representations that are trained in the pretrained model are used in supervised learning for a downstream task, with optional updates (fine-tuning) of the representations and network from the first stage [2]. This yields a question: Do we need to create a language model from scratch, or we can reuse an existing one and fine-tune it (or apply it) for our tasks? To address this question, we describe four different scenarios and analyze their costs and benefits based on the following aspects:
+
+-	Generalizable – Performance on different downstream tasks
+-	Required time and resources
+-	Required amount of data
+
+#### Scenario 1 - Training from scratch
+
+This is a domain specific pretraining which leads to a performance gain in related downstream tasks [2]. However, we need a large amount of in-domain data as well as computational resources and time.
+
+There are two types of BERT models adapted for a specific domain. In the first type a model is pre-trained with whole-word masking from scratch using domain-specific corpus. Second type of models are pre-train based on the original BERT model using the corpus of that specific domain [1]. Experiments in [1] shows the performance of the former type in most of downstream tasks was better than the latter.
+
+#### Scenario 2 - Continue pretraining a pretrained model (continual learning)
+
+Continual learning may refer to two concepts of domain-adaptive pretraining and task-adaptive pretraining.
+
+Domain-adaptive pretraining (also discussed in scenario 1) means continue pretraining a model on a large corpus of unlabeled domain-specific text [2]. 
+
+Task-adaptive pretraining refers to pre-training on the unlabeled training set for a given task [2]; Other studies e.g. [1] and [3] show its effectiveness. 
+
+Similar to scenario 1, we need a large amount of in-domain data as well as computational resources and time while we gain better performance than the previous scenario.
+
+
+#### Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
+
+Some studies show that BERT for general domain might generalize poorly on a specific domain since every domain has its unique knowledge. BERT cannot gain such knowledge without pre- training on the data for specific domain [1]. It might be the case for other existing pre-trained models if their in-domain data differ from our downstream tasks.
+In this scenario less time, data, and fewer resources are required. To gain acceptable performance, a suitable pretrained model in similar domain is required.
+
+#### Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
+A pre-trained model can be fine- tuned for diverse downstream tasks via supervised training on labeled datasets. It means the parameters of the pre-trained model are updated through the supervised learning process. Costs and benefits of this scenario is similar to scenario 3, while it might gain slightly better performance.
+
+
+#### Available pretrained models for historical data:
+- English
+    - MacBERTh
+
+- Dutch
+    - GysBERT (Manjavacas & Fonteyn, 2022)
+    - RobBERT? (Delobelle et al., 2019) (2020: https://doi.org/10.18653/v1/2020.findings-emnlp.292)
+    - Historical Dutch (https://huggingface.co/dbmdz/bert-base-historic-dutch-cased)
+    - Bertje? (de Vries et al., 2019)
+    - XLM-R (Facebook)
+
+
+#### Notes:
+- Training from scratch if we have enough data, time, and ressources
+- If we don't have enough data, time and ressources -> fine-tuning
+- Pretraining does not require *labeled* data but it might benefit from weak supervision (see Whisper in audio-to-text domain)
+- Evidence from MacBerth and GysBert: Pretrained models perform better than finetuned models on historical data
+- Fine-tune pretrained models for downstream tasks
+- Contextual language models should account for spelling variations across historical periods
+- Transfer distance between pretraining domain and downstream domain should be not too large
+- Tip: use stable widely used model architectures (for example: Bert)
+- Tip: when training a new model, aim for a release of the model on huggingface.co
+
+#### Brainstorming ideas:
+
+* general language model "knows" the world outside the research corpus
+    * (when) is external world knowledge desirable?
+* How to make in-domain pre-trained models useful for other tasks and researchers?
+* How much computational power is necessary (per data, research question etc.) for pre-training vs. fine-tuning?
+
+#### Reference
+[1] https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-022-04642-w
+[2] https://aclanthology.org/2020.acl-main.740.pdf
+[3] Jeremy Howard and Sebastian Ruder. 2018. Universal language model fine-tuning for text classification. In ACL.
+
+### 4.	What are suitable ways of evaluating Dutch historical language models?
+
+We estimate a language model on a text corpus covering several decades, and then use some of its parameters (word embeddings, ...) to answer the main research question: has the meaning of a word changed over time? We will assume that we can point the model to particular time periods, either because time is explicitly incorporated when estimating the model, or because the same model is estimated for different time periods. 
+
+We propose an approach with three steps.
+First, we evaluate the models's performance on unseen text, where we compare the model to existing state of the art models, and assess how it performs on common NLP tasks.
+Second, we evaluate the model's performance on unseen semantic shifts---we want a model with both good recall (does it find shifts that actually occurred) and good precision (it does not excessively detect shifts that have not occurred).
+Third, we use the model to find a semantic shift "in the wild". We suggest ways to increase the confidence that a conclusion from the estimated model is not an artefact of something else.
+
+
+#### 4.1 Model goodness of fit 
+To compare the estimated model to existing language models, the first option is to calculate the model perplexity: the probability distribution for a word in a particular sentence, conditional on the preceding words. 
+The perplexity can then be compared to other models. A challenge is that model perplexities are only comparable for models with the same vocabulary, and are only applicable to models with normalized proability distributions ([Chen, Beeferman, Rosenfeld](https://www.cs.cmu.edu/~roni/papers/eval-metrics-bntuw-9802.pdf)).
+
+The second option is to assess whether the model performs common NLP tasks equally well as other models. Example tasks include filling in the blanks, zero-shot-classification (for instance, classify the sentiment of a given sentence), sentence similarity, and finding the odd item in a list.
+
+A challenge is that for both approaches, one can only compare models from the same language. 
+
+
+
+#### 4.2 Detecting a semantic shift on "test" data
+
+To assess whether a model reliably detects a semantic shift, we propose to use a test data set where the semantic shift is under the researcher's control. There are two different types of data available, and a range of tasks with which assess the model.
+
+*Types of data*
+
+The first data type is annotated data with a known semantic shift. Such data have been curated for English, German, Latin and Swedish ([Schlechtweg et al 2020](https://aclanthology.org/2020.semeval-1.1/)) and Russian ([RuShiftEval](https://github.com/akutuzov/rushifteval_public)).
+If such data set does not exist for Dutch, it needs to be created.
+The idea is then to query the model for specific words for which we know they changed their meaning.
+
+An alternative to annotated data is to create synthetic data with a simulated semantic shift, and check whether the model detects the shift. The model is estimated on the synthetic data, similar to [(EMNLP 2019, section 5)](https://aclanthology.org/D19-1007/) on twitter data. 
+
+The advantage of the first approach is that it is a "real-world" case; the advantage of the second is the option to create a large test data set.
+
+*Tasks*
+
+The simplest---and our preferred---task is to check, for words or sentences that changed their meaning, whether the model associates them with the correct time period. For instance, one can ask the model whether two sentences are from the same time period, or predict the time period a given sentence was written. 
+
+There is a range of alternative tasks. A graphical approach projects the words' embeddings to two dimensions and plots them, similar to existing work by XXX.  <mark>**TODO: Carsten, what is the reference here?**</mark>
+
+Other options are common NLP tasks, as the following example illustrates. 
+Suppose word $x$ has changed meaning over time; in period 1, the synonyms are $\{y_1, y_2\}$, and in period 2 the synonyms are $\{z_1, z_2\}$. Then, a model trained on time period 1 should find an odd item in the set $\{z_1, z_2, x\}$ but not in the set $\{y_1, y_2, x\}$. A model trained on time period 2 should find an odd item in $\{y_1, y_2, x\}$ but not in $\{z_1, z_2, x\}$.
+A last option is to use generative approaches: If there was a semantic shift for a given word, then the model should generate a different response for the same prompt in two different time periods. 
+
+
+#### 4.3 Detecting a semantic shift "in the wild" 
+
+Supposing a semantic shift has been found, we suggest ways to probe the robustness of this finding.
+
+On one hand, the result should be consistent with other, simpler NLP approaches. For instance, the words that co-occur with the word "sustainability" should have changed over time. 
+On the other hand, the shift could stem from other statistical confounding. For instance, it could reflect the frequency with which a token occurs. 
+
+The first way to address such concerns is to account for time trends that affect the embedding vectors of all tokens in the same way. For instance, if the meaning of a word has truly changed, its embedding vector should have gotten closer to the embedding vector of the new synonym, and further away from the embedding vector of the old synonym. 
+
+The second way is a placebo test: Shuffle the documents from the corpus randomly across time periods, and re-estimate the model and the semantic shift. If the semantic shift also shows up in these data, it is likely an artefact of something else, rather than from the change in meaning. In this case, it is perhaps possible to control for this change in embeddings in the model that uses the non-perturbed data set, but we have not explored this possibility in detail.
+
+
+Lastly, we note that these steps are not isolated from each other. For instance, if a semantic shift is detected in the last step, then one can apply one of the NLP tasks from section 4.2 to validate the finding. 
+Similarly, finding that the word "sustainability" has changed its meaning from A to B will come with some uncertainty, and perplexity can be used to quantify this uncertainty, since it recovers the probability distribution of the next word given the history. For instance, we can calculate the perplexities for the sentence "Sustainability is ..." for different time periods.
+
+
+
+
+#### 4.5 Other ideas where it is unclear if useful
+*Leaving them here for the record; feel free to delete/add above*
+- Approaches that are used for training
+    - Adversarial/competitive networks
+        - one network does a task, the other says it is true or false 
+    - Electra model: change random word in text to something else. let the model predict whether the word is fake or not
+- Generative approaches 
+    - train models for different time periods. ask them "what is sustainability?" then use another model to classify the paragraphs -- but how to train such a model? 
+    - Paper on evaluating generative capacities of models on the basis of authorship attribution: [Assessing the Stylistic Properties of Neurally Generated Text in Authorship Attribution](https://aclanthology.org/W17-4914/)
+- Use model to summarise text?
+    - prompt-based approaches (Chat-GPT)? the problem is that these models use way more data than are available for historical research
+- current research on explainability: give a task where items differ on very particular dimensions. the answer that the model gives can then be used to infer which dimension has an impact/is important in the model. this is more about what the model has learned/what impacts the model results. not sure how relevant it is here. 
+- compare similarity scores using a test setup with paraphrases [(EMNLP 2021)](https://aclanthology.org/2021.emnlp-main.569/)
+    - ie formal and informal sentence that expresses the same content
+- Interpretability metric: Lime
+    - give example sentence to classify. the model iteratively changes some of the words, and sees which of the words change the prediction the most
+    - requires specifically curated test set. can be used to detect lexical change, but not necessarily for models that were built for other tasks? 
+    - this seems interesting, but I am not sure how it could be used to assess model performance. Would need to read up on it more.
+- Focus not on the single word, but on more on the whole corpus
+    - unclear what we would want to do specifically
+- What is the model using to make the predictions?
+    - this is related to the interpretability of the model, but I do not see where this fits into the above.
+- a semantic could reflect changes in social attitudes. For instance, the language can reflect historical racism and its changes over time.
+    - depends on the use: should the model reflect the historical circumstances? should the model be used for some tasks in society, and biases in the model could harm certain people.
+    - similarity meanings / analogies may be able to detect this: ie, "muslim" is close to "terrorist"
+    - **NOTE**: I think this is more about any interpretation of a semantic shift that one detects. Leaving it out for now.
+
+### 5.	How can we best account for historicity (change over time) in these types of models?
+*Moderator: Pim Huijnen*
+
+The majority of large language models are trained on present-day data. This makes these models principally unfit, or at least problematic, for historical research. After all, any semantic information is necessarily always based on the current-day meaning of, and relation between words. Historical research departs from the exact opposite assumption that you may never just assume that words mean what you think they mean. Whether we are interested in 'democracy', 'health', 'energy', or 'honor': the meaning of (these) words is fundamentally subjected to their context. It is, therefore, essential that large language models in some manner account for the historical context in which words were used to make them fit for the study of history. The question, then, is how to do that. This chapter will discuss the most important considerations that implementing historicity into large language models in our view should take into account.
+
+#### 5.1 What is change?
+The first of this considerations is: what do we mean by change? Large language models are able to capture change on two levels: the conceptual or semantic and the linguistic level. Change on the linguistic level includes grammatical change (how a word is written) and syntactic change (how a word is used in a sentence, for example, as an adjective, noun or verb). We can define conceptual change in terms of the onomasiological and semasiological dimensions of concepts (Geeraerts 2010: 27), where the first describes the different representations or manifestations of a concept and the second its different meanings or uses. The two are interrelated, as the following example may clarify. The concept of 'propaganda' has long been a neutral term that was related to 'advertisement'. This changed during the Cold War, with the result that propaganda now has a clear political connotation, related to words like 'proclamation' or 'campaign' more than to 'publicity' or 'commercial'. These semantically related terms constitute the onomasiological dimension of the change in meaning of the term 'propaganda', its increasing political connotation its semasiological one. Research can both focus on onomasiological change, or how the manifestations of a particular concept change over time (like 'advertisement', of which 'propaganda' should - at least in English or Dutch - be an adequate manifestion before WWII, but not anymore), or on semasiological change, or the semantic internal change of a word. Here, Geeraerts distinguishes between the changes of the denotional, referential or connotational meaning of a word (Geeraerts 2010: 26ff).  
+
+To be sure: there are more ways to study conceptual change. An important dimension is the *Pragmatik* that Koselleck distinguishes besides *Semantik*, *Syntax* and *Grammatik* (Koselleck 2006). This aspect of meaning and its change has clear parallels to Skinner's stress on intentionality and context (Skinner 1969). However, these dimensions are out of reach for large language models, because they require a hermeneutical accessapproach to the original texts that underly these models.
+
+#### 5.2 How to incorporate temporal information?
+
+
+options
+* multiple models representing change over time
+* build in historicity into the model
+* use time-stamps for evaluation tasks outside of the model
+
+How to incorporate temporal information?
+
+    Adapt model architecture to temporal use (explicit)
+    Add temporal context to text sequences (implicit)
+    Use model and text without changes
+
+##### 5.2.1 Multiple models or one?
+
+Multiple models or one model?
+* for multiple models (e.g. same hyperparameters different data, -> e.g. retraining, further pretraining, ...):
+    * it works for word embeddings: Shico (2015)
+    * distribution of the data over time is skewed, preventing us from seeing contextual information from periods in which data is sparse when using a single model
+* against multiple models:
+    * which token embeddings to use as seed terms?
+    * how to decide periodization?
+    * token embeddings already represent historical change
+
+##### 5.2.2 Build in historicity into the model
+
+    Adapt model architecture to temporal use (explicit)
+    Add temporal context to text sequences (implicit)
+
+#### 5.3 Evaluation
+
+What is the specific task? It affects the setting, e.g. options, steps, ...
+* ideology detection: detect specific sources (news media, political actors, etc.) from a number of different ones
+* look at largest perplexity as a proxy for meaning change
+* sentence comparison (for example, based on a seed list of interesting words) with time-stamped sentences to
+    * find similarities between sentences with the same key word for different time periods (= no change)
+    * trace the similarity of key words by studying their similarity for different time periods
+
+Important: how to evaluate historical change?
+
+Literature
+
+Reinhart Koselleck, ‘Stichwort: Begriffsgeschichte’, in: idem., Begriffsgeschichten. Studien zur Semantik und Pragmatik der politischen und sozialen Sprache (Frankfurt a.M. 2006) 99-102.
+
+Skinner
+
+Geeraerts
