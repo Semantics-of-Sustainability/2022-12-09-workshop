@@ -124,50 +124,50 @@ These are things that came up in the group on evaluation; Flavio has added them 
 - Stability of models [NAACL 2018](https://aclanthology.org/N18-1190/)
 
 
-
 ### 2. What are suitable model architectures and sizes?
 
 #### Overview
 
-Since the introduction of Transformer-based language models like BERT (Devlin et al., 2019), numerous model variations based on the similar architecture have been developed.
+Since the introduction of Transformer-based language models like BERT (Devlin et al., 2019), numerous model variations based on similar architectures have been developed.
 Despite the various differences between Bert, RoBerta (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), pracitioners oftentimes do not see noticable differences originating from choosing one of those flavours over the other.
 
-The performance of a language model depends on many aspects that are not related to architecture at all, most importantly the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021).
-Training large language models is expensive though, so the potential benefits of optimising the architecture empirically is not expected to justify the additional costs.
-Consequently, for instance GysBert (Manjavacas Arevalo & Fonteyn, 2022), have chosen to "closely follow the BERT-base uncased" architecture.
+The performance of a language model depends on many aspects that are not related to its architecture, most importantly the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021).
+Training large language models is expensive, so the potential benefits of finding the optimal architecture as well as hyper-parameter optimization are generally not expected to be worth the additional costs.
+Consequently, for instance the developers of GysBert (Manjavacas Arevalo & Fonteyn, 2022), have chosen to "closely follow the BERT-base uncased" architecture.
 
-Another consideration against always applying the current state-of-the-art architecture is the long development time: the entire process from data collection via implementation and training can take several years.
-During that time new best-performing architectures may have been developed, whereas flaws in current popular architectures might have been uncovered.
+Another argument for applying established methods, rather than today's state-of-the-art is the long development time: the entire process from data collection via implementation and training can take several years.
+During that time new best-performing architectures may have been developed, while flaws in currently popular architectures might be uncovered.
 
-Instead, informal approaches have shown to be more practical for finding a suitable architecture. For instance, have there already models been trained for similar use cases and/or on similar data in terms of domain, size etc.?
+Finding a suitable architecture can be approached more pragmatically by looking for previous approaches with similar requirements.
+For instance, have there models been trained for similar use cases and/or on similar data in terms of domain, size etc.?
+If they have had good results, a similar architecture should be a good choice.
 
 In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly?
-Rosin et al. (2022) add an additional attention matrix to encode the chronological information, whereas TempoBERT (Rosin & Radinsky, 2022) apply a standard BERT architecture, but manipulate the text so that it contains temporal information.
-They show that this leads to performance improvements downstream tasks such as semantic shift detection and sentence time prediction benefit significantly from temporal information explicitly added to the texts.
+Rosin et al. (2022) add an additional attention matrix to encode the chronological information.
+TempoBERT (Rosin & Radinsky, 2022), on the other hand, applies a standard BERT architecture -- after manipulating the text in the training data so that it contains temporal information.
+They show that downstream tasks such as semantic shift detection and sentence time prediction benefit significantly from this method.
 
-Another direction that might be relevant in future research leads towards models developed for other applications.
-Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; similar techniques could be applied for, possibly application-specific language modelling and/or multimodel models.
-However, it remains currently unclear how noise can be added to text in a way as required for the diffusion model training works as desired.
+Another direction relevant in future research points towards models developed for applications outside of NLP.
+Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodel models.
+However, the specific method of adding noise as implemented in Stable Diffusion, is not directly transferable to text data.
 
-In conclusion there is no generic answer in finding the optimal model architecture per use case.
-This would require a dedicated large-scale research project, while the practical benefit remains unclear.
+#### Pre-processing and Tokenization
 
-#### Pre-processing and Input Data
-
-As outlined above, factors other than model architecture play important roles for the performance of a language model.
-For one, the choice of the tokenization in terms of both design and size seems to be important, whereas there has not been specific research on the exact impact of different tokenizers on downstream tasks.
+As outlined above, factors other than the model architecture play important roles for the performance of a language model.
+For one, the choice of the tokenization in terms of both design and size seems to be important, whereas there has been little specific research on the impact of different tokenizers on downstream tasks.
 Intuitively, it seems clear though that a tokenizer introduces a specific kind of bias by producing a specific set of tokens on which a model is trained.
 
 Xue et al. (2022) demonstrate that token-free, "byte-level models are competitive with their token-level counterparts", and "characterize the trade-offs in terms of parameter count, training FLOPs, and inference speed."
 Clark et al. (2022) tackle the "linguistic pitfalls of tokenization" with a character-based, token-free tokenization approach.
 
-Another related factor is normalization in the pre-processing pipeline.
+Normalization in the pre-processing pipeline is a related aspect.
 Especially historic texts, oftentimes digitized automatically through optical character recognition (OCR) or handwritten text recognition (HTR), typically contain numerous errors.
 Apart from OCR and HTR errors, spelling variations are very common in historic texts.
-Spelling rules for Dutch have established only in 1888, and changed several times since.
+Spelling rules for Dutch have been established only in 1888, and changed several times since.
 Before that, variations are even larger; for instance, capitalization was not consistent and different regions and time periods used to spell according to their own standards.
 
 However, practitioners advice against normalization of input text before training a language model, because that also removes the model's robustness against variations that occur in unseen texts.
+At the same time, (semi-)automatically removing gargabe, as opposed to variation, does have a positive impact on the model.
 
 Dealing with historic language data includes a specific aspect: almost all larger datasets for Dutch have already been digitized.
 Therefore, new data is unlikely to appear in the foreseeable future -- although its quality might improve for instance through improved OCR and HTR technology.
@@ -180,20 +180,20 @@ In order to get a sense for the data requirements for specific tasks or domains,
 
 Quality measures such as perplexity, lexical variation, and stylistic variation can help understanding the distribution and homogenity of the data.
 
-Conneau et al. (2020) investigate the impact of data distribution particularly considering low-resource languages in the context of multi-lingual models, showing ways to train performant models effectively even for languages and/or domains for which little data is available.
+Conneau et al. (2020) investigate the impact of data distribution, particularly considering low-resource languages in the context of multi-lingual models, showing ways to train performant models effectively even for languages and/or domains for which little data is available.
 
 #### Computation
 
 Computational costs for training a model fluctuates heavily, again depending on specifics of model architecture and input data size.
-In particular the latter is especially relevant, as pointed out by Kaplan et al., 2020.
+The latter is especially relevant, as pointed out by Kaplan et al., 2020.
 They also analyse other aspects and inter-dependent factors regarding their respective impact on model training times and costs.
 
-
-Smaller input data sets can likely be handled by, for instance, university-owned GPU machines which are, however, too slow (and overloaded) to train large-scale models such as GysBert (Manjavacas Arevalo & Fonteyn, 2022).
+Smaller input data sets can likely be handled by, for instance, university-owned GPU machines and smaller-scale clusters.
+However, they often are too slow (and overloaded) to train large-scale models such as GysBert (Manjavacas Arevalo & Fonteyn, 2022).
 
 Commercial services can handle those large workloads, but are expensive.
-Currently, using a TPU machine as provided by the Google Cloud Engine, costs approximately EUR 2000 per week; the approximate duration of training a large-scale language model.
-These cost might decrease in the future, while computation speed might increase.
+The costs of using a TPU machine as provided by the Google Cloud Engine can sum up to thousand of Euros during the course the approximate duration of training a large-scale language model, which can take several week.
+These costs might decrease in the future, while computation speed might increase.
 Anyway, training a large-scale language model using commercial offerings is too expensive for the budget of many research projects.
 
 In the context of this project (Semantics of Sustainability), the NL eScience Center currently investigates ways of applying the Dutch National Supercomputer Snellius effectively and efficiently for scientific purposes.
