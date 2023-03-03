@@ -329,9 +329,10 @@ The advantage of the first approach is that it is a "real-world" case; the advan
 
 *Tasks*
 
-The simplest---and our preferred---task is to check, for words or sentences that changed their meaning, whether the model associates them with the correct time period. For instance, one can ask the model whether two sentences are from the same time period, or predict the time period a given sentence was written. 
+The simplest---and our preferred---task is to check, for words or sentences that changed their meaning, whether the model associates them with the correct time period. For instance, one can ask the model whether two sentences are from the same time period, or predict the time period a given sentence was written.
 
-There is a range of alternative tasks. A graphical approach projects the words' embeddings to two dimensions and plots them, similar to existing work by XXX.  <mark>**TODO: Carsten, what is the reference here?**</mark>
+There is a range of alternative tasks. A graphical approach projects the words' embeddings to two dimensions and plots them, facilitating the visualization of clusters that correspond to different meaning to a word.
+Kutuzov et al. (2022) provide an overview of current methods for semantic shift detection using contextual language models, illustrated with said visualizations using PCA.
 
 Other options are common NLP tasks, as the following example illustrates. 
 Suppose word $x$ has changed meaning over time; in period 1, the synonyms are $\{y_1, y_2\}$, and in period 2 the synonyms are $\{z_1, z_2\}$. Then, a model trained on time period 1 should find an odd item in the set $\{z_1, z_2, x\}$ but not in the set $\{y_1, y_2, x\}$. A model trained on time period 2 should find an odd item in $\{y_1, y_2, x\}$ but not in $\{z_1, z_2, x\}$.
@@ -353,7 +354,9 @@ The second way is a placebo test: Shuffle the documents from the corpus randomly
 Lastly, we note that these steps are not isolated from each other. For instance, if a semantic shift is detected in the last step, then one can apply one of the NLP tasks from section 4.2 to validate the finding. 
 Similarly, finding that the word "sustainability" has changed its meaning from A to B will come with some uncertainty, and perplexity can be used to quantify this uncertainty, since it recovers the probability distribution of the next word given the history. For instance, we can calculate the perplexities for the sentence "Sustainability is ..." for different time periods.
 
+#### References
 
+Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings for Semantic Change Detection: Lessons Learned.” Northern European Journal of Language Technology 8, no. 1 (August 26, 2022). https://doi.org/10.3384/nejlt.2000-1533.2022.3478.
 
 
 #### 4.5 Other ideas where it is unclear if useful
