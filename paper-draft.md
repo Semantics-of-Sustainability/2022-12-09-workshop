@@ -392,34 +392,37 @@ Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings 
 The majority of large language models are trained on present-day data. This makes these models principally unfit, or at least problematic, for historical research. After all, any semantic information is necessarily always based on the current-day meaning of, and relation between words. Historical research departs from the exact opposite assumption that you may never just assume that words mean what you think they mean. Whether we are interested in 'democracy', 'health', 'energy', or 'honor': the meaning of (these) words is fundamentally subjected to their context. It is, therefore, essential that large language models in some manner account for the historical context in which words were used to make them fit for the study of history. The question, then, is how to do that. This chapter will discuss the most important considerations that implementing historicity into large language models in our view should take into account.
 
 #### 5.1 What is change?
+
 The first of this considerations is: what do we mean by change? Large language models are able to capture change on two levels: the conceptual or semantic and the linguistic level. Change on the linguistic level includes grammatical change (how a word is written) and syntactic change (how a word is used in a sentence, for example, as an adjective, noun or verb). We can define conceptual change in terms of the onomasiological and semasiological dimensions of concepts (Geeraerts 2010: 27), where the first describes the different representations or manifestations of a concept and the second its different meanings or uses. The two are interrelated, as the following example may clarify. The concept of 'propaganda' has long been a neutral term that was related to 'advertisement'. This changed during the Cold War, with the result that propaganda now has a clear political connotation, related to words like 'proclamation' or 'campaign' more than to 'publicity' or 'commercial'. These semantically related terms constitute the onomasiological dimension of the change in meaning of the term 'propaganda', its increasing political connotation its semasiological one. Research can both focus on onomasiological change, or how the manifestations of a particular concept change over time (like 'advertisement', of which 'propaganda' should - at least in English or Dutch - be an adequate manifestion before WWII, but not anymore), or on semasiological change, or the semantic internal change of a word. Here, Geeraerts distinguishes between the changes of the denotional, referential or connotational meaning of a word (Geeraerts 2010: 26ff).  
 
-To be sure: there are more ways to study conceptual change. An important dimension is the *Pragmatik* that Koselleck distinguishes besides *Semantik*, *Syntax* and *Grammatik* (Koselleck 2006). This aspect of meaning and its change has clear parallels to Skinner's stress on intentionality and context (Skinner 1969). However, these dimensions are out of reach for large language models, because they require a hermeneutical accessapproach to the original texts that underly these models.
+To be sure: there are more ways to study conceptual change. An important dimension is the *Pragmatik* that Koselleck distinguishes besides *Semantik*, *Syntax* and *Grammatik* (Koselleck 2006). This aspect of meaning and its change has clear parallels to Skinner's stress on intentionality and context (Skinner 1969). However, these dimensions are out of reach for large language models, because they require a hermeneutical access to the original texts that underly these models.
 
 #### 5.2 How to incorporate temporal information?
 
+Two basic strategies exist to use large language models to study change over time:
 
-options
-* multiple models representing change over time
-* build in historicity into the model
-* use time-stamps for evaluation tasks outside of the model
+* create multiple models with data from subsequent time periods to represent change over time
+* build in temporal information into one model
 
-How to incorporate temporal information?
-
-    Adapt model architecture to temporal use (explicit)
-    Add temporal context to text sequences (implicit)
-    Use model and text without changes
+These two strategies will be elaborated below. However, it is important to note that there is a third option to use language models for historical research: not to take temporal information into account in the architecture of the model at all. Once the reliability of the model is established, specific tasks can be used to study semantic shifts based on domain knowledge - when the nearest neighbours of 'cell' in an English language model based on historical and current data contain both references to biology and to mobile phones, researchers can infer a semasiological change or broadening from that information alone.
 
 ##### 5.2.1 Multiple models or one?
 
-Multiple models or one model?
-* for multiple models (e.g. same hyperparameters different data, -> e.g. retraining, further pretraining, ...):
-    * it works for word embeddings: Shico (2015)
-    * distribution of the data over time is skewed, preventing us from seeing contextual information from periods in which data is sparse when using a single model
+The creation of multiple models with data from subsequent time periods used to be the standard to use word embedding algorithms to study historical change. Hamilton, Leskovec, and Jurafsky (2016) were the first to demonstrate this principle by creating two models, align these using orthogonal Procrustes and calculate the cosine distances of words in both models. The alignment of the models is a crucial factor here, because the embedding spaces of two independently trained models are not automatically comparable: although words might be used similarly in both datasets, their vector representations do not necessarily have to be similar (Wevers and Koolen 2020). Orthogonal Procrustes aligns subsequent models to the first to ensure comparability. The downside of this approach is that it only works if the two (or more) models share the exact same vocabulary. Words that are present in not all models first have to be pruned, which seems a large sacrifice for scholars interested in semantic change (Wevers and Koolen 2020).
+
+Different approaches to use multiple models have been introduced since (Wevers and Koolen 2020). One of these is using models with partly overlapping data, so as to force the algorithm to build upon earlier models, but also to represent both change *and* continuity in the models (Kenter et al. 2015). This method enables scholars to not just compare to distinct periods in time, but to follow shifts in meaning from one period to another.
+
+Some considerations for the use of multiple models to study semantic change:
+
+* pro multiple models:
+    * it works (for word embeddings)
+    * the distribution of data over time is often skewed. This prevents us from seeing sufficient contextual information from periods in which data is sparse when using a single model
+
+
 * against multiple models:
-    * which token embeddings to use as seed terms?
-    * how to decide periodization?
-    * token embeddings already represent historical change
+    * periodization (slicing a dataset into multiple, diachronic subsets) is necessarily arbitrary 
+    * token embeddings already represent historical change, which takes away the necessity to create multiple models
+    * it will be difficult to establish which of the token embeddings should be used as seed terms
 
 ##### 5.2.2 Build in historicity into the model
 
@@ -443,4 +446,12 @@ Reinhart Koselleck, ‘Stichwort: Begriffsgeschichte’, in: idem., Begriffsgesc
 
 Skinner
 
-Geeraerts-
+Geeraerts
+
+Hamilton, W. L., J. Leskovec, and D. Jurafsky. 2016a. Cultural shift or linguistic drift? comparing two computational measures of semantic change. Proceedings of the Conference on Empirical Methods in Natural Language Processing. Conference on Empirical Methods in Natural Language Processing, Vol. 2016, NIH Public Access, 2116.
+
+Schönemann, P. H. (1966). A generalized solution of the orthogonal Procrustes problem. Psychometrika, 31(1):1–10.
+
+Kenter, T., M. Wevers, P. Huijnen, and M. de Rijke. 2015. Ad Hoc monitoring of vocabulary shifts over time. Proceedings of the 24th ACM International on Conference on Information and Knowledge Management, ACM, New York, 1191–1200. doi: 10.1145/2806416. 2806474.
+
+Wevers, M., & Koolen, M. (2020). Digital begriffsgeschichte: Tracing semantic change using word embeddings. Historical Methods, 0(0), 1–18. https://doi.org/10.1080/01615440.2020.1760157
