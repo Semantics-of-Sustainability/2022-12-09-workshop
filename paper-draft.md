@@ -19,19 +19,56 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 
 
 ### 1.	What are suitable corpora to base Dutch historical language models on?
-The are various Dutch language models available to train language models on (XXX). However, if the language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets different requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
+The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
 
-#### Corpus properties
-One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what corpus size is required for my model? The answer however, is not straigtforward, as it depends on the task and context of the language model (XXX): the pretraining method, the model architecture and the application. XXX EXAMPLES AND REFERENCES. In the objective considered here the language model will use contextualized word embeddings for pretraining, and a transformer model architecture. As the application of the model is to analyse text in historical context, the corpus requires XXX.
-- required size
-- balance/bias
-- representativeness
-- data quality
-- stability in word embeddings(?)
+<ins> Corpus properties </ins>
 
-#### Available corpora
-- which, where,license
+One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer however, is not straigtforward, as it depends on architecture, task and context of the language model (XXX). <b>When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, but/and adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)). </b>
+<!--- please check the content above, because I cannot fully reconstruct this based on the notes, I am also not sure about the references!! --->
 
+To train a historical Dutch language model the corpus balance, bias, and representiveness of the training data have to be carefully considered. Important factors are the diversity of domain, genre, topic, authors, style, and time period. To make an informed decision, any information that can be inferred from the data is relevant, and ideally the metadata should contain:
+- Time period
+- Language domain / genre / style (news paper, parlementairy etc.)
+- Size (number of tokens, sentences, files, and data size)
+- Source
+- Document type
+- Date issued
+- Quality of OCR/HTR
+- URL / DOI
+- License
+
+Available training data often consists of data sets with different data quality. How to deal with this depend on the model task. It might make sense to train models with multiple sizes of lower quality data. However, if the model is trained on lower quality data, will the output be of sufficient quality? On the other hand, lower quality training data may also help with messy data.
+
+Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without cooyright restrictions.
+
+
+<ins> Available corpora </ins>
+
+Listed in the table below is a non-exhaustive number of available corpora (in alphabetical order) that can be considered for creating historical Dutch transformer models.
+
+| Title | License | Period | Genre | Size | Reference |  Comments|
+|-|-|-|-|-|-|-|
+|[Amsterdam City Archives](https://transkribus.eu/r/amsterdam-city-archives)| <b>CC0 1.0 (?)</b> <!-- not sure -->| 1578-1811 | Notarial deeds, administrative | | | Contains both HTR and Ground Truth documents|
+|[DBNL](https://www.dbnl.org)|[Permission needed](https://www.kb.nl/onderzoeken-vinden/datasets/dbnl-dataset)| <b>c.a. 1200 <!-- 1550 --> -present (?) </b>| plays, poetry, novels, letters ||
+|[Delpher newspapers](https://www.delpher.nl/over-delpher/delpher-open-krantenarchief/wat-zit-er-in-het-delpher-open-krantenarchief)| [Permission needed](https://www.delpher.nl/over-delpher/data-in-delpher) | 1618-1879 | newspapers, books, periodicals| ca. 111-126 GB| |
+| [EuroParl](https://www.statmt.org/europarl/) | [Permission needed](https://www.statmt.org/europarl/) | 1996-2011 | Political discussions, transcripts, Administrative | parallel corpus Dutch-English: 190 MB | [Philipp Koehn, MT Summit 2005](http://www.iccs.inf.ed.ac.uk/~pkoehn/publications/europarl-mtsummit05.pdf) | Data is same as Staten Generaal Digitaal |
+|[Huygens Resources](https://resources.huygens.knaw.nl)| |   700-present | correspondence, administrative, and more || |Collection of various recourses |
+| [Corpus Gysseling](http://hdl.handle.net/10032/tm-a2-j4) |[Non-commercial user agreement](https://taalmaterialen.ivdnt.org/wp-content/uploads/voorwaarden/voorwaarden_corpus-gysseling.pdf)|1200-1300 |Corpus Middel Nederlands| 42 MB| Corpus Gysseling (Version 1.0) (1990) [Data set]. [Available at the Dutch Language Institute](http://hdl.handle.net/10032/tm-a2-j4)| Collection of 13th century texts that served as resources for the Vroegmiddelnederlands dictionary|
+| [NederLab](https://www.nederlab.nl/onderzoeksportaal/) |||| | | Web environment for researchers containing historical recourses for Dutch language, literature, and culture. |
+| [NIBG Radio and television](https://www.beeldengeluid.nl/kennis/kennisbronnen) | [ Terms of use ](https://files.beeldengeluid.nl/pdf/Gebruikersvoorwaarden_DAAN-BeeldenGeluid.pdf)| 1870-present | Radio transcripts, subtitles ||
+| [Resolutions States General](https://republic.huygens.knaw.nl) |[Permission needed](https://republic.huygens.knaw.nl/index.php/republic-huygens-ing/werkwijze/)| 1576-1796 | Government decisions, Administrative | || Currently in progess of development |
+| [OSCAR](https://oscar-project.org/) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Data avilable [upon request](https://oscar-project.github.io/documentation/accessing/) and via [Huggingface](https://huggingface.co/oscar-corpus)|||180GB (Dutch)| [See publications](https://oscar-project.org/#featured) |Based on common crawl|
+| [SONAR](https://taalmaterialen.ivdnt.org/download/tstc-sonar-corpus/) |[Non-commerical user agreement](https://taalmaterialen.ivdnt.org/wp-content/uploads/voorwaarden/voorwaarden_sonar-corpus.pdf)| present-day | various |SoNaR-500: 500 million words, SoNaR-1: 1 million words|SoNaR-corpus (Version 1.2.1) (2015) [Data set]. [Available at the Dutch Language Institute](http://hdl.handle.net/10032/tm-a2-h5)Two data sets are available: SoNaR-500 and SoNaR-1|
+| [Staten Generaal Digitaal](https://data.overheid.nl/dataset/staten-generaal-digitaal---koninklijke-bibliotheek) | [CC-0-1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.nl) | 1814-1995 | Reports of meetings in Dutch parliament ||
+| [Taalmaterialen IvdNT](https://taalmaterialen.ivdnt.org/document-tag/corpus/) | Check individual data sets | Large range of time spans | Various | | | IvdNT provides a large amount of Dutch historical data sets, data details can be found per data set |
+| [Twente Nieuws Corpus (TwNC)](https://research.utwente.nl/en/datasets/twente-nieuws-corpus-twnc) |[Check documentation](https://research.utwente.nl/files/6545509/TwNC-ELRA-final.pdf)|Different per source|Newspaper articles, subtitles and news broadcasts|530M words|[Ordelman, R. J. F., de Jong, F. M. G., van Hessen, A. J., & Hondorp, G. H. W. (2007). TwNC: a Multifaceted Dutch News Corpus. ELRA Newsletter, 12(3-4).](https://research.utwente.nl/en/publications/twnc-a-multifaceted-dutch-news-corpus)|
+| [VOC, WIC, and Notarial deeds HTR](https://doi.org/10.5281/zenodo.6414086) |[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode)| 1637-1792 | reports, correspondence | 100.4 GB |DOI: 10.5281/zenodo.6414086|
+| [Woordenboek Nederlandse Taal](https://ivdnt.org/woordenboeken/woordenboek-der-nederlandsche-taal/) | [Contact](https://ivdnt.org/profile/roland-de-bonth)  |1500 - 1976|Dutch historical dictionary|95.000 main keywords| | ||
+
+
+<!--
+
+** original notes **
 *Moderator: Laura Ootes*
 
 
@@ -78,6 +115,7 @@ Discussion Ideas:
         * Date issued
 * List of links of available data sets
 
+<!--
 | Title | License | URL | Period | Genre | Size (GB) |
 |-|-|-|-|-|-|
 |Delpher newspapers| Permission needed | https://www.delpher.nl/over-delpher/delpher-open-krantenarchief/wat-zit-er-in-het-delpher-open-krantenarchief | 1618-1879 | newspapers, books, periodicals
@@ -102,6 +140,15 @@ Discussion Ideas:
     * Depends on the task
     * Does it make sense to train models with multiple sizes of lower quality data? Is it 'garbage in, garbage out', or can this help with messy data?
 
+* References
+    * M. van der Wees. [What’s in a Domain?  Towards Fine-Grained Adaptation for Machine Translation](https://staff.fnwi.uva.nl/m.derijke/wp-content/papercite-data/pdf/van-der-wees-phd-thesis-2017.pdf).  PhD thesis, Universiteit van Amsterdam, 2017
+    * [Conneau et al. 2020. Unsupervised Cross-lingual Representation Learning at Scale](https://arxiv.org/pdf/1911.02116v2.pdf)
+    * [Abadji et al. 2022. Towards a Cleaner Document-Oriented Multilingual Crawled Corpus](https://arxiv.org/pdf/2201.06642.pdf)
+    * [Ortis Suárez et al 2019. Asynchronous Pipeline for Processing Huge Corpora
+on Medium to Low Resource Infrastructures](https://arxiv.org/pdf/2201.06642.pdf): OSCAR
+    * Li, Z., Wallace, E., Shen, S., Lin, K., Keutzer, K., Klein, D., & Gonzalez, J. (2020, November). Train big, then compress: Rethinking model size for efficient training and inference of transformers. In International Conference on Machine Learning (pp. 5958-5968). PMLR. http://proceedings.mlr.press/v119/li20m/li20m.pdf
+
+-->
 
 * References
     * M. van der Wees. [What’s in a Domain?  Towards Fine-Grained Adaptation for Machine Translation](https://staff.fnwi.uva.nl/m.derijke/wp-content/papercite-data/pdf/van-der-wees-phd-thesis-2017.pdf).  PhD thesis, Universiteit van Amsterdam, 2017
@@ -109,9 +156,21 @@ Discussion Ideas:
     * [Abadji et al. 2022. Towards a Cleaner Document-Oriented Multilingual Crawled Corpus](https://arxiv.org/pdf/2201.06642.pdf)
     * [Ortis Suárez et al 2019. Asynchronous Pipeline for Processing Huge Corpora
 on Medium to Low Resource Infrastructures](https://arxiv.org/pdf/2201.06642.pdf): OSCAR
+    * Li, Z., Wallace, E., Shen, S., Lin, K., Keutzer, K., Klein, D., & Gonzalez, J. (2020, November). Train big, then compress: Rethinking model size for efficient training and inference of transformers. In International Conference on Machine Learning (pp. 5958-5968). PMLR. http://proceedings.mlr.press/v119/li20m/li20m.pdf
+
+<!--- @misc{vanwissenetal2020unlockingthearchives,
+    author = {van Wissen, Leon and Latronico, Chiara and Zamborlini, Veruska and Reinders, Jirsi and van den Heuvel, Charles},
+    keywords = {Entity Extraction from Archival Documents, GLAM, Linked Open Data, Dutch Golden Age},
+    month = {June},
+    note = {Presented at DHBenelux 2020, 3-5 June. World Wide Web},
+    title = {Unlocking the archives: A pipeline for scanning, transcribing, and modelling entities of archival documents into Linked Open Data},
+    year = {2020},
+    doi  = {10.5281/zenodo.3862817},
+    url  = {https://doi.org/10.5281/zenodo.3862817}
+}--->
 
 
-
+<b>
 These are things that came up in the group on evaluation; Flavio has added them here but just delete them if they do not fit/are already covered
 - Oxford English Dictionary
     - detecting word sense
@@ -119,9 +178,10 @@ These are things that came up in the group on evaluation; Flavio has added them 
     - can dictionaries be used to measure the change in the word sense?
         - unclear what it means if a word is not documented
         - a [plot](https://github.com/emanjavacas/macberth-eval/blob/main/images/period-plots.pdf) documenting the distribution of senses over time based on OED data (possibility to use for lexical change?)
-- WNT: Woordenboek der Nederlandsche Taal
 - [LChange22](https://languagechange.org/events/2022-acl-lchange/)
 - Stability of models [NAACL 2018](https://aclanthology.org/N18-1190/)
+</b> <!-- I don't know what to do with this-->
+
 
 
 ### 2. What are suitable model architectures and sizes?
