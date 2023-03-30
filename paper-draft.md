@@ -18,12 +18,13 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 | Conclusion            |   |
 
 
-### 1.	What are suitable corpora to base Dutch historical language models on?
+### 1. What are suitable corpora to base Dutch historical language models on?
+
 The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
 
 <ins> Corpus properties </ins>
 
-One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer however, is not straigtforward, as it depends on architecture, task and context of the language model (XXX). <b>When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, but/and adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)). </b>
+One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer depends on architecture, task and context of the language model. When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, whereas adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)).
 <!--- please check the content above, because I cannot fully reconstruct this based on the notes, I am also not sure about the references!! --->
 
 To train a historical Dutch language model the corpus balance, bias, and representiveness of the training data have to be carefully considered. Important factors are the diversity of domain, genre, topic, authors, style, and time period. To make an informed decision, any information that can be inferred from the data is relevant, and ideally the metadata should contain:
@@ -169,7 +170,7 @@ on Medium to Low Resource Infrastructures](https://arxiv.org/pdf/2201.06642.pdf)
     url  = {https://doi.org/10.5281/zenodo.3862817}
 }--->
 
-
+<!-- 
 <b>
 These are things that came up in the group on evaluation; Flavio has added them here but just delete them if they do not fit/are already covered
 - Oxford English Dictionary
@@ -180,8 +181,7 @@ These are things that came up in the group on evaluation; Flavio has added them 
         - a [plot](https://github.com/emanjavacas/macberth-eval/blob/main/images/period-plots.pdf) documenting the distribution of senses over time based on OED data (possibility to use for lexical change?)
 - [LChange22](https://languagechange.org/events/2022-acl-lchange/)
 - Stability of models [NAACL 2018](https://aclanthology.org/N18-1190/)
-</b> <!-- I don't know what to do with this-->
-
+</b> I don't know what to do with this-->
 
 
 ### 2. What are suitable model architectures and sizes?
