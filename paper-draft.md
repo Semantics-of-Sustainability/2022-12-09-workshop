@@ -7,17 +7,6 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 
 
 
-| chapter      | Name    |
-| ------------ | ------- |
-| Introduction |         |
-| 1            | Laura   |
-| 2            | Carsten |
-| 3            | Parisa  |
-| 4             |    Flavio     |
-|       5       |     Pim    |
-| Conclusion            |   |
-
-
 ### 1. What are suitable corpora to base Dutch historical language models on?
 
 The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
@@ -202,10 +191,7 @@ Finding a suitable architecture can be approached more pragmatically by looking 
 For instance, have there models been trained for similar use cases and/or on similar data in terms of domain, size etc.?
 If they have had good results, a similar architecture should be a good choice.
 
-In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly?
-Rosin et al. (2022) add an additional attention matrix to encode the chronological information.
-TempoBERT (Rosin & Radinsky, 2022), on the other hand, applies a standard BERT architecture -- after manipulating the text in the training data so that it contains temporal information.
-They show that downstream tasks such as semantic shift detection and sentence time prediction benefit significantly from this method.
+In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly? Part 5 below elaborates on this point.
 
 Another direction relevant in future research points towards models developed for applications outside of NLP.
 Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodel models.
@@ -478,7 +464,6 @@ Some considerations for the use of multiple models to study semantic change:
     * it works (for word embeddings)
     * the distribution of data over time is often skewed. This prevents us from seeing sufficient contextual information from periods in which data is sparse when using a single model
 
-
 * against multiple models:
     * periodization (slicing a dataset into multiple, diachronic subsets) is necessarily arbitrary 
     * token embeddings already represent historical change, which takes away the necessity to create multiple models
@@ -486,21 +471,21 @@ Some considerations for the use of multiple models to study semantic change:
 
 ##### 5.2.2 Build in historicity into the model
 
-    Adapt model architecture to temporal use (explicit)
-    Add temporal context to text sequences (implicit)
+Multiple approaches have demonstrated that building in historicity directly into the language model is possible. Rosin et al. (2022) add an additional attention matrix to encode the chronological information. TempoBERT (Rosin & Radinsky, 2022), on the other hand, applies a standard BERT architecture -- after manipulating the text in the training data so that it contains temporal information. They show that downstream tasks such as semantic shift detection and sentence time prediction benefit significantly from this method.
 
 #### 5.3 Evaluation
 
-What is the specific task? It affects the setting, e.g. options, steps, ...
+The decision for representing historicity via multiple models or within one large model, in the end, heavily depends on the specific tasks the model has to do. Some suggestions for tasks:
+
 * ideology detection: detect specific sources (news media, political actors, etc.) from a number of different ones
 * look at largest perplexity as a proxy for meaning change
 * sentence comparison (for example, based on a seed list of interesting words) with time-stamped sentences to
     * find similarities between sentences with the same key word for different time periods (= no change)
     * trace the similarity of key words by studying their similarity for different time periods
 
-Important: how to evaluate historical change?
+For all these tasks it is crucial that the model 'works'. This means that the outcomes of these tasks are reliable in the sense that they represent history more than biases in the data, artefacts of the model's architecture, etc. A number of examples in the form of tokens or sentences, of which the historical trajectories are known, can help evaluating the model. 
 
-Literature
+#### Literature
 
 Reinhart Koselleck, ‘Stichwort: Begriffsgeschichte’, in: idem., Begriffsgeschichten. Studien zur Semantik und Pragmatik der politischen und sozialen Sprache (Frankfurt a.M. 2006) 99-102.
 
