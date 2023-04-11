@@ -11,7 +11,7 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 
 The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
 
-<ins> Corpus properties </ins>
+#### 1.1 Corpus properties
 
 One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer depends on architecture, task and context of the language model. When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, whereas adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)).
 <!--- please check the content above, because I cannot fully reconstruct this based on the notes, I am also not sure about the references!! --->
@@ -32,7 +32,7 @@ Available training data often consists of data sets with different data quality.
 Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without cooyright restrictions.
 
 
-<ins> Available corpora </ins>
+#### 1.2 Available corpora
 
 Listed in the table below is a non-exhaustive number of available corpora (in alphabetical order) that can be considered for creating historical Dutch transformer models.
 
@@ -197,7 +197,7 @@ Another direction relevant in future research points towards models developed fo
 Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodel models.
 However, the specific method of adding noise as implemented in Stable Diffusion, is not directly transferable to text data.
 
-#### Pre-processing and Tokenization
+#### 2.1 Pre-processing and Tokenization
 
 As outlined above, factors other than the model architecture play important roles for the performance of a language model.
 For one, the choice of the tokenization in terms of both design and size seems to be important, whereas there has been little specific research on the impact of different tokenizers on downstream tasks.
@@ -228,7 +228,7 @@ Quality measures such as perplexity, lexical variation, and stylistic variation 
 
 Conneau et al. (2020) investigate the impact of data distribution, particularly considering low-resource languages in the context of multi-lingual models, showing ways to train performant models effectively even for languages and/or domains for which little data is available.
 
-#### Computation
+#### 2.2 Computation
 
 Computational costs for training a model fluctuates heavily, again depending on specifics of model architecture and input data size.
 The latter is especially relevant, as pointed out by Kaplan et al., 2020.
@@ -278,13 +278,13 @@ Learning in most of NLP systems consists of two levels of training. First a Lang
 -	Required time and resources
 -	Required amount of data
 
-#### Scenario 1 - Training from scratch
+#### 3.1 Scenario 1 - Training from scratch
 
 This is a domain specific pretraining which leads to a performance gain in related downstream tasks [2]. However, we need a large amount of in-domain data as well as computational resources and time.
 
 There are two types of BERT models adapted for a specific domain. In the first type a model is pre-trained with whole-word masking from scratch using domain-specific corpus. Second type of models are pre-train based on the original BERT model using the corpus of that specific domain [1]. Experiments in [1] shows the performance of the former type in most of downstream tasks was better than the latter.
 
-#### Scenario 2 - Continue pretraining a pretrained model (continual learning)
+#### 3.2 Scenario 2 - Continue pretraining a pretrained model (continual learning)
 
 Continual learning may refer to two concepts of domain-adaptive pretraining and task-adaptive pretraining.
 
@@ -295,16 +295,16 @@ Task-adaptive pretraining refers to pre-training on the unlabeled training set f
 Similar to scenario 1, we need a large amount of in-domain data as well as computational resources and time while we gain better performance than the previous scenario.
 
 
-#### Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
+#### 3.3 Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
 
 Some studies show that BERT for general domain might generalize poorly on a specific domain since every domain has its unique knowledge. BERT cannot gain such knowledge without pre- training on the data for specific domain [1]. It might be the case for other existing pre-trained models if their in-domain data differ from our downstream tasks.
 In this scenario less time, data, and fewer resources are required. To gain acceptable performance, a suitable pretrained model in similar domain is required.
 
-#### Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
+#### 3.4 Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
 A pre-trained model can be fine- tuned for diverse downstream tasks via supervised training on labeled datasets. It means the parameters of the pre-trained model are updated through the supervised learning process. Costs and benefits of this scenario is similar to scenario 3, while it might gain slightly better performance.
 
 
-#### Available pretrained models for historical data:
+##### Available pretrained models for historical data:
 - English
     - MacBERTh
 
@@ -500,3 +500,61 @@ Schönemann, P. H. (1966). A generalized solution of the orthogonal Procrustes p
 Kenter, T., M. Wevers, P. Huijnen, and M. de Rijke. 2015. Ad Hoc monitoring of vocabulary shifts over time. Proceedings of the 24th ACM International on Conference on Information and Knowledge Management, ACM, New York, 1191–1200. doi: 10.1145/2806416. 2806474.
 
 Wevers, M., & Koolen, M. (2020). Digital begriffsgeschichte: Tracing semantic change using word embeddings. Historical Methods, 0(0), 1–18. https://doi.org/10.1080/01615440.2020.1760157
+
+### Bibliography
+
+Abadji, Julien, Pedro Ortiz Suarez, Laurent Romary, Benoît Sagot. “Towards a cleaner document-oriented multilingual crawled corpus.” arXiv, January 17, 2022. https://doi.org/10.48550/arXiv.2201.06642 
+
+Clark, Jonathan H., Dan Garrette, Iulia Turc, and John Wieting. “Canine: Pre-Training an Efficient Tokenization-Free Encoder for Language Representation.” Transactions of the Association for Computational Linguistics 10 (January 31, 2022): 73–91. https://doi.org/10.1162/tacl_a_00448.
+
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. “Unsupervised Cross-Lingual Representation Learning at Scale.” arXiv, April 7, 2020. https://doi.org/10.48550/arXiv.1911.02116.
+
+Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. “Unsupervised Cross-Lingual Representation Learning at Scale.” arXiv, April 7, 2020. https://doi.org/10.48550/arXiv.1911.02116.
+
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. “BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding.” ArXiv:1810.04805 [Cs], May 24, 2019. http://arxiv.org/abs/1810.04805.
+
+Geeraerts
+
+Gururangan, Suchin, Ana Marasović, Swabha Swayamdipta, Kyle Lo, Iz Beltagy, Doug Downey, and Noah A. Smith. “Don’t Stop Pretraining: Adapt Language Models to Domains and Tasks.” In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics, 8342–8360, Online. Association for Computational Linguistics, 2020. https://doi.org/10.18653/v1/2020.acl-main.740 
+
+Hamilton, Wiliam L., Jure Leskovec, and Dan Jurafsky. “Cultural shift or linguistic drift? comparing two computational measures of semantic change.” In Proceedings of the Conference on Empirical Methods in Natural Language Processing. Conference on Empirical Methods in Natural Language Processing, 2116-2121. NIH Public Access, 2016. https://doi.org/10.18653/v1/d16-1229 
+
+He, Pengcheng, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen. “DeBERTa: Decoding-Enhanced BERT with Disentangled Attention.” arXiv, October 6, 2021. https://doi.org/10.48550/arXiv.2006.03654.
+
+Howard, Jeremy and Sebastian Ruder. “Universal Language Model Fine-tuning for Text Classification.” In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), 328–339. Melbourne, Australia: Association for Computational Linguistics, 2018. https://doi.org/10.18653/v1/P18-1031 
+
+Kaplan, Jared, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. “Scaling Laws for Neural Language Models.” arXiv, January 22, 2020. https://doi.org/10.48550/arXiv.2001.08361.
+
+Kenter, Tom, Melvin Wevers, Pim Huijnen, and Maarten de Rijke. “Ad Hoc monitoring of vocabulary shifts over time.” In Proceedings of the 24th ACM International on Conference on Information and Knowledge Management, 1191–1200. New York: Association for Computing Machinery, 2015. https://doi.org/10.1145/2806416.2806474 
+
+Koselleck, Reinhart. “Stichwort: Begriffsgeschichte“, in: Begriffsgeschichten. Studien zur Semantik und Pragmatik der politischen und sozialen Sprache. Frankfurt a.M,  2006. 99-102.
+
+Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings for Semantic Change Detection: Lessons Learned.” Northern European Journal of Language Technology 8, no. 1 (August 26, 2022). https://doi.org/10.3384/nejlt.2000-1533.2022.3478.
+
+Li, Zhuohan, Eric Wallace, Sheng Shen, Kevin Lin, Kurt Keutzer, Dan Klein, Joseph E. Gonzalez. (2020, November). Train big, then compress: Rethinking model size for efficient training and inference of transformers. In 37th International Conference on Machine Learning, 5958–5968. PLMR 119, Online, 2020. http://proceedings.mlr.press/v119/li20m/li20m.pdf
+
+Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov. “RoBERTa: A Robustly Optimized BERT Pretraining Approach.” arXiv, July 26, 2019. https://doi.org/10.48550/arXiv.1907.11692.
+
+Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “MacBERTh: Development and Evaluation of a Historically Pre-Trained Language Model for English (1450-1950).” In Proceedings of the Workshop on Natural Language Processing for Digital Humanities, 23–36. NIT Silchar, India: NLP Association of India (NLPAI), 2021. https://aclanthology.org/2021.nlp4dh-1.4.
+
+Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “Non-Parametric Word Sense Disambiguation for Historical Languages.” In Proceedings of the 2nd International Workshop on Natural Language Processing for Digital Humanities, 123–34. Taipei, Taiwan: Association for Computational Linguistics, 2022. https://aclanthology.org/2022.nlp4dh-1.16.
+
+Rombach, Robin, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. “High-Resolution Image Synthesis with Latent Diffusion Models.” arXiv, April 13, 2022. https://doi.org/10.48550/arXiv.2112.10752.
+
+Rosin, Guy D., and Kira Radinsky. “Temporal Attention for Language Models.” arXiv, May 3, 2022. http://arxiv.org/abs/2202.02093.
+
+Rosin, Guy D., Ido Guy, and Kira Radinsky. “Time Masking for Temporal Language Models.” In Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining, 833–41. Virtual Event AZ USA: ACM, 2022. https://doi.org/10.1145/3488560.3498529.
+
+Schönemann, Peter H. “A generalized solution of the orthogonal Procrustes problem.” Psychometrika, 31, no. 1 (March 1966): 1–10. https://doi.org/10.1007/BF02289451 
+
+Skinner
+
+Su, Peng and Vijay-Shanker, K. “Investigation of improving the pre-training and fine-tuning of BERT model for biomedical relation extraction.” BMC Bioinformatics 23, no. 120 (April 4, 2022): 1–20. https://doi.org/10.1186/s12859-022-04642-w 
+
+Suárez, Pedro Javier Ortiz, Benoît Sagot, and Laurent Romary. “Asynchronous pipeline for processing huge corpora on medium to low resource infrastructures.” 7th Workshop on the Challenges in the Management of Large Corpora (CMLC-7). Leibniz-Institut für Deutsche Sprache, 2019. https://doi.org/10.14618/IDS-PUB-9021  
+
+Van der Wees, Marlies. “What’s in a Domain? Towards Fine-Grained Adaptation for Machine Translation”. PhD thesis, Universiteit van Amsterdam, 2017.
+
+Wevers, Melvin and Marijn Koolen. “Digital begriffsgeschichte: Tracing semantic change using word embeddings. Historical Methods.” Historical Methods: A Journal of Quantitative and Interdisciplinary History 53, no. 4 (May 13, 2020): 226–243. https://doi.org/10.1080/01615440.2020.1760157
+
+Xue, Linting, Aditya Barua, Noah Constant, Rami Al-Rfou, Sharan Narang, Mihir Kale, Adam Roberts, and Colin Raffel. “ByT5: Towards a Token-Free Future with Pre-Trained Byte-to-Byte Models.” Transactions of the Association for Computational Linguistics 10 (March 25, 2022): 291–306. https://doi.org/10.1162/tacl_a_00461
