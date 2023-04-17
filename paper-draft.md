@@ -1,6 +1,8 @@
 # How to create (historical) Dutch transformer models
 ## A working paper
 
+
+
 ### Introduction
 
 The rise of transformer language models such as [BERT](https://arxiv.org/abs/1810.04805) has opened up possibilities to use contextualized word embeddings for downstream text processing tasks. This includes applications in humanities research. However, the methods to properly use these models in a humanities and, particularly, a historical context are still very much under development. The aim of this working paper is to present state-of-the-art guidelines to use transformers to study change over time.
