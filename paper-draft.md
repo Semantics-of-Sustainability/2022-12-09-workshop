@@ -11,7 +11,7 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 
 The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
 
-#### 1.1 Corpus properties
+#### 1.1. Corpus properties
 
 One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer depends on architecture, task and context of the language model. When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, whereas adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)).
 <!--- please check the content above, because I cannot fully reconstruct this based on the notes, I am also not sure about the references!! --->
@@ -32,7 +32,7 @@ Available training data often consists of data sets with different data quality.
 Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without cooyright restrictions.
 
 
-#### 1.2 Available corpora
+#### 1.2. Available corpora
 
 Listed in the table below is a non-exhaustive number of available corpora (in alphabetical order) that can be considered for creating historical Dutch transformer models.
 
@@ -335,7 +335,7 @@ For all these tasks it is crucial that the model 'works'. This means that the ou
 
 
 
-### Bibliography
+### 6. Bibliography
 
 Abadji, Julien, Pedro Ortiz Suarez, Laurent Romary, Benoît Sagot. “Towards a cleaner document-oriented multilingual crawled corpus.” arXiv, January 17, 2022. https://doi.org/10.48550/arXiv.2201.06642 
 
