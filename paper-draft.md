@@ -195,7 +195,7 @@ Another direction relevant in future research points towards models developed fo
 Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodel models.
 However, the specific method of adding noise as implemented in Stable Diffusion, is not directly transferable to text data.
 
-#### 2.1 Pre-processing and Tokenization
+#### 2.1. Pre-processing and Tokenization
 
 As outlined above, factors other than the model architecture play important roles for the performance of a language model.
 For one, the choice of the tokenization in terms of both design and size seems to be important, whereas there has been little specific research on the impact of different tokenizers on downstream tasks.
@@ -226,7 +226,7 @@ Quality measures such as perplexity, lexical variation, and stylistic variation 
 
 Conneau et al. (2020) investigate the impact of data distribution, particularly considering low-resource languages in the context of multi-lingual models, showing ways to train performant models effectively even for languages and/or domains for which little data is available.
 
-#### 2.2 Computation
+#### 2.2. Computation
 
 Computational costs for training a model fluctuates heavily, again depending on specifics of model architecture and input data size.
 The latter is especially relevant, as pointed out by Kaplan et al., 2020.
@@ -242,31 +242,6 @@ Anyway, training a large-scale language model using commercial offerings is too 
 
 In the context of this project (Semantics of Sustainability), the NL eScience Center currently investigates ways of applying the Dutch National Supercomputer Snellius effectively and efficiently for scientific purposes.
 
-#### References
-
-Clark, Jonathan H., Dan Garrette, Iulia Turc, and John Wieting. “Canine: Pre-Training an Efficient Tokenization-Free Encoder for Language Representation.” Transactions of the Association for Computational Linguistics 10 (January 31, 2022): 73–91. https://doi.org/10.1162/tacl_a_00448.
-
-Conneau, Alexis, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzmán, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov. “Unsupervised Cross-Lingual Representation Learning at Scale.” arXiv, April 7, 2020. https://doi.org/10.48550/arXiv.1911.02116.
-
-Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. “BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding.” ArXiv:1810.04805 [Cs], May 24, 2019. http://arxiv.org/abs/1810.04805.
-
-He, Pengcheng, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen. “DeBERTa: Decoding-Enhanced BERT with Disentangled Attention.” arXiv, October 6, 2021. https://doi.org/10.48550/arXiv.2006.03654.
-
-Kaplan, Jared, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. “Scaling Laws for Neural Language Models.” arXiv, January 22, 2020. https://doi.org/10.48550/arXiv.2001.08361.
-
-Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov. “RoBERTa: A Robustly Optimized BERT Pretraining Approach.” arXiv, July 26, 2019. https://doi.org/10.48550/arXiv.1907.11692.
-
-Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “MacBERTh: Development and Evaluation of a Historically Pre-Trained Language Model for English (1450-1950).” In Proceedings of the Workshop on Natural Language Processing for Digital Humanities, 23–36. NIT Silchar, India: NLP Association of India (NLPAI), 2021. https://aclanthology.org/2021.nlp4dh-1.4.
-
-Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “Non-Parametric Word Sense Disambiguation for Historical Languages.” In Proceedings of the 2nd International Workshop on Natural Language Processing for Digital Humanities, 123–34. Taipei, Taiwan: Association for Computational Linguistics, 2022. https://aclanthology.org/2022.nlp4dh-1.16.
-
-Rombach, Robin, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. “High-Resolution Image Synthesis with Latent Diffusion Models.” arXiv, April 13, 2022. https://doi.org/10.48550/arXiv.2112.10752.
-
-Rosin, Guy D., Ido Guy, and Kira Radinsky. “Time Masking for Temporal Language Models.” In Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining, 833–41. Virtual Event AZ USA: ACM, 2022. https://doi.org/10.1145/3488560.3498529.
-
-Rosin, Guy D., and Kira Radinsky. “Temporal Attention for Language Models.” arXiv, May 3, 2022. http://arxiv.org/abs/2202.02093.
-
-Xue, Linting, Aditya Barua, Noah Constant, Rami Al-Rfou, Sharan Narang, Mihir Kale, Adam Roberts, and Colin Raffel. “ByT5: Towards a Token-Free Future with Pre-Trained Byte-to-Byte Models.” Transactions of the Association for Computational Linguistics 10 (March 25, 2022): 291–306. https://doi.org/10.1162/tacl_a_00461.
 
 ### 3.	What are (dis)advantages of pre-training vs. fine-tuning?
 
@@ -276,15 +251,15 @@ Learning in most of NLP systems consists of two levels of training. First a Lang
 -	Required time and resources
 -	Required amount of data
 
-#### 3.1 Scenarios
+#### 3.1. Scenarios
 
-#### 3.1.1 Scenario 1 - Training from scratch
+#### 3.1.1. Scenario 1 - Training from scratch
 
 This is a domain specific pretraining which leads to a performance gain in related downstream tasks [2]. However, we need a large amount of in-domain data as well as computational resources and time.
 
 There are two types of BERT models adapted for a specific domain. In the first type a model is pre-trained with whole-word masking from scratch using domain-specific corpus. Second type of models are pre-train based on the original BERT model using the corpus of that specific domain [1]. Experiments in [1] shows the performance of the former type in most of downstream tasks was better than the latter.
 
-#### 3.1.2 Scenario 2 - Continue pretraining a pretrained model (continual learning)
+#### 3.1.2. Scenario 2 - Continue pretraining a pretrained model (continual learning)
 
 Continual learning may refer to two concepts of domain-adaptive pretraining and task-adaptive pretraining.
 
@@ -295,16 +270,16 @@ Task-adaptive pretraining refers to pre-training on the unlabeled training set f
 Similar to scenario 1, we need a large amount of in-domain data as well as computational resources and time while we gain better performance than the previous scenario.
 
 
-#### 3.1.3 Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
+#### 3.1.3. Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
 
 Some studies show that BERT for general domain might generalize poorly on a specific domain since every domain has its unique knowledge. BERT cannot gain such knowledge without pre- training on the data for specific domain [1]. It might be the case for other existing pre-trained models if their in-domain data differ from our downstream tasks.
 In this scenario less time, data, and fewer resources are required. To gain acceptable performance, a suitable pretrained model in similar domain is required.
 
-#### 3.1.4 Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
+#### 3.1.4. Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
 A pre-trained model can be fine- tuned for diverse downstream tasks via supervised training on labeled datasets. It means the parameters of the pre-trained model are updated through the supervised learning process. Costs and benefits of this scenario is similar to scenario 3, while it might gain slightly better performance.
 
 
-##### 3.2 Available pretrained models for historical data:
+##### 3.2. Available pretrained models for historical data:
 - English
     - MacBERTh
 
@@ -316,7 +291,7 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
     - XLM-R (Facebook)
 
 
-#### 3.3 Miscellanious notes and brainstorming ideas:
+#### 3.3. Miscellaneous notes and brainstorming ideas:
 - Training from scratch if we have enough data, time, and ressources
 - If we don't have enough data, time and ressources -> fine-tuning
 - Pretraining does not require *labeled* data but it might benefit from weak supervision (see Whisper in audio-to-text domain)
@@ -331,10 +306,6 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
 - How to make in-domain pre-trained models useful for other tasks and researchers?
 - How much computational power is necessary (per data, research question etc.) for pre-training vs. fine-tuning?
 
-#### Reference
-[1] https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-022-04642-w
-[2] https://aclanthology.org/2020.acl-main.740.pdf
-[3] Jeremy Howard and Sebastian Ruder. 2018. Universal language model fine-tuning for text classification. In ACL.
 
 ### 4.	What are suitable ways of evaluating Dutch historical language models?
 
@@ -346,7 +317,7 @@ Second, we evaluate the model's performance on unseen semantic shifts---we want 
 Third, we use the model to find a semantic shift "in the wild". We suggest ways to increase the confidence that a conclusion from the estimated model is not an artefact of something else.
 
 
-#### 4.1 Model goodness of fit 
+#### 4.1. Model goodness of fit 
 To compare the estimated model to existing language models, the first option is to calculate the model perplexity: the probability distribution for a word in a particular sentence, conditional on the preceding words. 
 The perplexity can then be compared to other models. A challenge is that model perplexities are only comparable for models with the same vocabulary, and are only applicable to models with normalized proability distributions ([Chen, Beeferman, Rosenfeld](https://www.cs.cmu.edu/~roni/papers/eval-metrics-bntuw-9802.pdf)).
 
@@ -356,7 +327,7 @@ A challenge is that for both approaches, one can only compare models from the sa
 
 
 
-#### 4.2 Detecting a semantic shift on "test" data
+#### 4.2. Detecting a semantic shift on "test" data
 
 To assess whether a model reliably detects a semantic shift, we propose to use a test data set where the semantic shift is under the researcher's control. There are two different types of data available, and a range of tasks with which assess the model.
 
@@ -382,7 +353,7 @@ Suppose word $x$ has changed meaning over time; in period 1, the synonyms are $\
 A last option is to use generative approaches: If there was a semantic shift for a given word, then the model should generate a different response for the same prompt in two different time periods. 
 
 
-#### 4.3 Detecting a semantic shift "in the wild" 
+#### 4.3. Detecting a semantic shift "in the wild" 
 
 Supposing a semantic shift has been found, we suggest ways to probe the robustness of this finding.
 
@@ -397,12 +368,8 @@ The second way is a placebo test: Shuffle the documents from the corpus randomly
 Lastly, we note that these steps are not isolated from each other. For instance, if a semantic shift is detected in the last step, then one can apply one of the NLP tasks from section 4.2 to validate the finding. 
 Similarly, finding that the word "sustainability" has changed its meaning from A to B will come with some uncertainty, and perplexity can be used to quantify this uncertainty, since it recovers the probability distribution of the next word given the history. For instance, we can calculate the perplexities for the sentence "Sustainability is ..." for different time periods.
 
-#### References
 
-Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings for Semantic Change Detection: Lessons Learned.” Northern European Journal of Language Technology 8, no. 1 (August 26, 2022). https://doi.org/10.3384/nejlt.2000-1533.2022.3478.
-
-
-#### 4.5 Miscellanious notes and brainstorming ideas
+#### 4.5. Miscellaneous notes and brainstorming ideas
 *Leaving them here for the record; feel free to delete/add above*
 - Approaches that are used for training
     - Adversarial/competitive networks
@@ -434,13 +401,13 @@ Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings 
 
 The majority of large language models are trained on present-day data. This makes these models principally unfit, or at least problematic, for historical research. After all, any semantic information is necessarily always based on the current-day meaning of, and relation between words. Historical research departs from the exact opposite assumption that you may never just assume that words mean what you think they mean. Whether we are interested in 'democracy', 'health', 'energy', or 'honor': the meaning of (these) words is fundamentally subjected to their context. It is, therefore, essential that large language models in some manner account for the historical context in which words were used to make them fit for the study of history. The question, then, is how to do that. This chapter will discuss the most important considerations that implementing historicity into large language models in our view should take into account.
 
-#### 5.1 What is change?
+#### 5.1. What is change?
 
 The first of this considerations is: what do we mean by change? Large language models are able to capture change on two levels: the conceptual or semantic and the linguistic level. Change on the linguistic level includes grammatical change (how a word is written) and syntactic change (how a word is used in a sentence, for example, as an adjective, noun or verb). We can define conceptual change in terms of the onomasiological and semasiological dimensions of concepts (Geeraerts 2010: 27), where the first describes the different representations or manifestations of a concept and the second its different meanings or uses. The two are interrelated, as the following example may clarify. The concept of 'propaganda' has long been a neutral term that was related to 'advertisement'. This changed during the Cold War, with the result that propaganda now has a clear political connotation, related to words like 'proclamation' or 'campaign' more than to 'publicity' or 'commercial'. These semantically related terms constitute the onomasiological dimension of the change in meaning of the term 'propaganda', its increasing political connotation its semasiological one. Research can both focus on onomasiological change, or how the manifestations of a particular concept change over time (like 'advertisement', of which 'propaganda' should - at least in English or Dutch - be an adequate manifestion before WWII, but not anymore), or on semasiological change, or the semantic internal change of a word. Here, Geeraerts distinguishes between the changes of the denotional, referential or connotational meaning of a word (Geeraerts 2010: 26ff).  
 
 To be sure: there are more ways to study conceptual change. An important dimension is the *Pragmatik* that Koselleck distinguishes besides *Semantik*, *Syntax* and *Grammatik* (Koselleck 2006). This aspect of meaning and its change has clear parallels to Skinner's stress on intentionality and context (Skinner 1969). However, these dimensions are out of reach for large language models, because they require a hermeneutical access to the original texts that underly these models.
 
-#### 5.2 How to incorporate temporal information?
+#### 5.2. How to incorporate temporal information?
 
 Two basic strategies exist to use large language models to study change over time:
 
@@ -449,7 +416,7 @@ Two basic strategies exist to use large language models to study change over tim
 
 These two strategies will be elaborated below. However, it is important to note that there is a third option to use language models for historical research: not to take temporal information into account in the architecture of the model at all. Once the reliability of the model is established, specific tasks can be used to study semantic shifts based on domain knowledge - when the nearest neighbours of 'cell' in an English language model based on historical and current data contain both references to biology and to mobile phones, researchers can infer a semasiological change or broadening from that information alone.
 
-##### 5.2.1 Multiple models or one?
+##### 5.2.1. Multiple models or one?
 
 The creation of multiple models with data from subsequent time periods used to be the standard to use word embedding algorithms to study historical change. Hamilton, Leskovec, and Jurafsky (2016) were the first to demonstrate this principle by creating two models, align these using orthogonal Procrustes and calculate the cosine distances of words in both models. The alignment of the models is a crucial factor here, because the embedding spaces of two independently trained models are not automatically comparable: although words might be used similarly in both datasets, their vector representations do not necessarily have to be similar (Wevers and Koolen 2020). Orthogonal Procrustes aligns subsequent models to the first to ensure comparability. The downside of this approach is that it only works if the two (or more) models share the exact same vocabulary. Words that are present in not all models first have to be pruned, which seems a large sacrifice for scholars interested in semantic change (Wevers and Koolen 2020).
 
@@ -466,11 +433,11 @@ Some considerations for the use of multiple models to study semantic change:
     * token embeddings already represent historical change, which takes away the necessity to create multiple models
     * it will be difficult to establish which of the token embeddings should be used as seed terms
 
-##### 5.2.2 Build in historicity into the model
+##### 5.2.2. Build in historicity into the model
 
 Multiple approaches have demonstrated that building in historicity directly into the language model is possible. Rosin et al. (2022) add an additional attention matrix to encode the chronological information. TempoBERT (Rosin & Radinsky, 2022), on the other hand, applies a standard BERT architecture -- after manipulating the text in the training data so that it contains temporal information. They show that downstream tasks such as semantic shift detection and sentence time prediction benefit significantly from this method.
 
-#### 5.3 Evaluation
+#### 5.3. Evaluation
 
 The decision for representing historicity via multiple models or within one large model, in the end, heavily depends on the specific tasks the model has to do. Some suggestions for tasks:
 
@@ -482,21 +449,7 @@ The decision for representing historicity via multiple models or within one larg
 
 For all these tasks it is crucial that the model 'works'. This means that the outcomes of these tasks are reliable in the sense that they represent history more than biases in the data, artefacts of the model's architecture, etc. A number of examples in the form of tokens or sentences, of which the historical trajectories are known, can help evaluating the model. 
 
-#### Literature
 
-Reinhart Koselleck, ‘Stichwort: Begriffsgeschichte’, in: idem., Begriffsgeschichten. Studien zur Semantik und Pragmatik der politischen und sozialen Sprache (Frankfurt a.M. 2006) 99-102.
-
-Skinner
-
-Geeraerts
-
-Hamilton, W. L., J. Leskovec, and D. Jurafsky. 2016a. Cultural shift or linguistic drift? comparing two computational measures of semantic change. Proceedings of the Conference on Empirical Methods in Natural Language Processing. Conference on Empirical Methods in Natural Language Processing, Vol. 2016, NIH Public Access, 2116.
-
-Schönemann, P. H. (1966). A generalized solution of the orthogonal Procrustes problem. Psychometrika, 31(1):1–10.
-
-Kenter, T., M. Wevers, P. Huijnen, and M. de Rijke. 2015. Ad Hoc monitoring of vocabulary shifts over time. Proceedings of the 24th ACM International on Conference on Information and Knowledge Management, ACM, New York, 1191–1200. doi: 10.1145/2806416. 2806474.
-
-Wevers, M., & Koolen, M. (2020). Digital begriffsgeschichte: Tracing semantic change using word embeddings. Historical Methods, 0(0), 1–18. https://doi.org/10.1080/01615440.2020.1760157
 
 ### Bibliography
 
