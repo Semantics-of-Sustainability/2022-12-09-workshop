@@ -175,8 +175,6 @@ These are things that came up in the group on evaluation; Flavio has added them 
 
 ### 2. What are suitable model architectures and sizes?
 
-#### Overview
-
 Since the introduction of Transformer-based language models like BERT (Devlin et al., 2019), numerous model variations based on similar architectures have been developed.
 Despite the various differences between Bert, RoBerta (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), pracitioners oftentimes do not see noticable differences originating from choosing one of those flavours over the other.
 
@@ -278,13 +276,15 @@ Learning in most of NLP systems consists of two levels of training. First a Lang
 -	Required time and resources
 -	Required amount of data
 
-#### 3.1 Scenario 1 - Training from scratch
+#### 3.1 Scenarios
+
+#### 3.1.1 Scenario 1 - Training from scratch
 
 This is a domain specific pretraining which leads to a performance gain in related downstream tasks [2]. However, we need a large amount of in-domain data as well as computational resources and time.
 
 There are two types of BERT models adapted for a specific domain. In the first type a model is pre-trained with whole-word masking from scratch using domain-specific corpus. Second type of models are pre-train based on the original BERT model using the corpus of that specific domain [1]. Experiments in [1] shows the performance of the former type in most of downstream tasks was better than the latter.
 
-#### 3.2 Scenario 2 - Continue pretraining a pretrained model (continual learning)
+#### 3.1.2 Scenario 2 - Continue pretraining a pretrained model (continual learning)
 
 Continual learning may refer to two concepts of domain-adaptive pretraining and task-adaptive pretraining.
 
@@ -295,16 +295,16 @@ Task-adaptive pretraining refers to pre-training on the unlabeled training set f
 Similar to scenario 1, we need a large amount of in-domain data as well as computational resources and time while we gain better performance than the previous scenario.
 
 
-#### 3.3 Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
+#### 3.1.3 Scenario 3 - Using a pretrained model and apply it to new data (zero-shot)
 
 Some studies show that BERT for general domain might generalize poorly on a specific domain since every domain has its unique knowledge. BERT cannot gain such knowledge without pre- training on the data for specific domain [1]. It might be the case for other existing pre-trained models if their in-domain data differ from our downstream tasks.
 In this scenario less time, data, and fewer resources are required. To gain acceptable performance, a suitable pretrained model in similar domain is required.
 
-#### 3.4 Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
+#### 3.1.4 Scenario 4 - Fine-tuning a pretrained (historical or contemporary) model on downstream task
 A pre-trained model can be fine- tuned for diverse downstream tasks via supervised training on labeled datasets. It means the parameters of the pre-trained model are updated through the supervised learning process. Costs and benefits of this scenario is similar to scenario 3, while it might gain slightly better performance.
 
 
-##### Available pretrained models for historical data:
+##### 3.2 Available pretrained models for historical data:
 - English
     - MacBERTh
 
@@ -316,7 +316,7 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
     - XLM-R (Facebook)
 
 
-#### Notes:
+#### 3.3 Miscellanious notes and brainstorming ideas:
 - Training from scratch if we have enough data, time, and ressources
 - If we don't have enough data, time and ressources -> fine-tuning
 - Pretraining does not require *labeled* data but it might benefit from weak supervision (see Whisper in audio-to-text domain)
@@ -325,14 +325,11 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
 - Contextual language models should account for spelling variations across historical periods
 - Transfer distance between pretraining domain and downstream domain should be not too large
 - Tip: use stable widely used model architectures (for example: Bert)
-- Tip: when training a new model, aim for a release of the model on huggingface.co
-
-#### Brainstorming ideas:
-
-* general language model "knows" the world outside the research corpus
-    * (when) is external world knowledge desirable?
-* How to make in-domain pre-trained models useful for other tasks and researchers?
-* How much computational power is necessary (per data, research question etc.) for pre-training vs. fine-tuning?
+- Tip: when training a new model, aim for a release of the model on huggingface.com
+- general language model "knows" the world outside the research corpus
+    - (when) is external world knowledge desirable?
+- How to make in-domain pre-trained models useful for other tasks and researchers?
+- How much computational power is necessary (per data, research question etc.) for pre-training vs. fine-tuning?
 
 #### Reference
 [1] https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-022-04642-w
@@ -405,7 +402,7 @@ Similarly, finding that the word "sustainability" has changed its meaning from A
 Kutuzov, Andrey, Erik Velldal, and Lilja Øvrelid. “Contextualized Embeddings for Semantic Change Detection: Lessons Learned.” Northern European Journal of Language Technology 8, no. 1 (August 26, 2022). https://doi.org/10.3384/nejlt.2000-1533.2022.3478.
 
 
-#### 4.5 Other ideas where it is unclear if useful
+#### 4.5 Miscellanious notes and brainstorming ideas
 *Leaving them here for the record; feel free to delete/add above*
 - Approaches that are used for training
     - Adversarial/competitive networks
