@@ -281,7 +281,7 @@ Similarly, finding that the word "sustainability" has changed its meaning from A
     - **NOTE**: I think this is more about any interpretation of a semantic shift that one detects. Leaving it out for now.
 
 ### 5.	How can we best account for historicity (change over time) in these types of models?
-*Moderator: Pim Huijnen*
+
 
 The majority of large language models are trained on present-day data. This makes these models principally unfit, or at least problematic, for historical research. After all, any semantic information is necessarily always based on the current-day meaning of, and relation between words. Historical research departs from the exact opposite assumption that you may never just assume that words mean what you think they mean. Whether we are interested in 'democracy', 'health', 'energy', or 'honor': the meaning of (these) words is fundamentally subjected to their context. It is, therefore, essential that large language models in some manner account for the historical context in which words were used to make them fit for the study of history. The question, then, is how to do that. This chapter will discuss the most important considerations that implementing historicity into large language models in our view should take into account.
 
