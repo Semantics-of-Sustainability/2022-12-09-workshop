@@ -83,21 +83,31 @@ Parisa Zahedi
 
 ## Introduction
 
-The rise of transformer language models such as [BERT](https://arxiv.org/abs/1810.04805) has opened up possibilities to use contextualized word embeddings for downstream text processing tasks. This includes applications in humanities research. However, the methods to properly use these models in a humanities and, particularly, a historical context are still very much under development. The aim of this working paper is to present state-of-the-art guidelines to use transformers to study change over time. This paper is based on a [workshop](https://github.com/Semantics-of-Sustainability/2022-12-09-workshop) that brought together experts from Belgium and the Netherlands held at the NL eScience Center Amsterdam on 9 December 2022.
+The rise of transformer language models such as [BERT](https://arxiv.org/abs/1810.04805) has opened up possibilities to use contextualized word embeddings for downstream text processing tasks. This includes applications in humanities research. However, the methods to properly use these models in a humanities context -- and, particularly, for historical research -- are still very much under development. The aim of this working paper is to present guidelines for using transformer language models to study change over time. This paper is based on a [workshop](https://github.com/Semantics-of-Sustainability/2022-12-09-workshop) held at the NL eScience Center Amsterdam on 9 December 2022, which brought together experts in computational analysis of historical text.
 
 ---
   
 
-## 1. What are suitable corpora to base Dutch historical language models on?
+## 1. Which corpora are suitable to base Dutch historical language models on?
 
-The are various Dutch text sources available to train language models on, such as books (and their reviews), news sources, Wikipedia, and Twitter. If the trained language model will be used to analyse historical texts and to answer questions related to language over different historial time frames, this sets specific requirements to the corpus that is used in training the model. In this section, the properties that are required or should be taken into account when training historical Dutch langues models are discussed.
+There are various Dutch text sources available to train language models, including books, book reviews, news sources, Wikipedia, and Twitter. Yet, if a trained language model will be used to analyse historical texts or to answer questions related to language over different historial time frames, the training corpus should meet specific requirements. In this section, we discuss what should be taken into account when training historical Dutch language models. 
+<!--- (Or even shorter: "In this section, we discuss those requirements") --->
 
 ### 1.1. Corpus properties
 
-One of the important properties that affect how succesfull a trained model is, is the size of the training corpus. Naturally, the question then rises: what (minimum) corpus size is required for my model? The answer depends on architecture, task and context of the language model. When a model is being pre-trained from scratch one needs to consider how to balance different input corpora. For a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages, whereas adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020)).
-<!--- please check the content above, because I cannot fully reconstruct this based on the notes, I am also not sure about the references!! --->
+A comment often made about transformer language models is that they are 'data-hungry', which means that the quality of a trained model is affected the size of the training corpus. However, when it comes to historical text, the number of available resources are not unlimited. Thus, researchers who wish to train a new model often wonder what the (minimum) required amount of training data is. The answer depends on architecture, task and context of the language model. 
+<!--- What do you mean by 'the context of the language model'? --->
+Furthermore, language models can either be 'pre-trained from scratch', e.g. when a model of a particular language (variety) has been pre-trained on linguistic material from the target language (variety), or an existing pre-trained language model can be fine-tuned or adapted to a new language (variety). Generally speaking, pre-training from scratch requires more input than adaptation. Additionally, when compiling a data set to pre-train a language model, one needs to consider how to balance different input corpora (e.g. in terms of genre, time period, etc.). 
+Given that many historical languages could be considered 'low-resource' languages, for which it is not practically feasible to copile a large and balanced data set for pre-training, adaptation may be a solution. It has been argued that, for a fixed model capacity (model size, number of parameters), low-resource languages benefit from related high-resource languages. As such, language models trained on Present-day language varieties could serve as the basis for an adapted historical model. 
+<!--- Terms, like 'training from scratch' should be introduced before they are mentioned. I've made some suggestions. --->
+<!--- I've removed "However whereas adding more languages to training decreases performance after a point (Conneau et al. 2020, Li et al. (2020))." because I don't know how it fits into teh argument you are trying to make --->
 
-To train a historical Dutch language model the corpus balance, bias, and representiveness of the training data have to be carefully considered. Important factors are the diversity of domain, genre, topic, authors, style, and time period. To make an informed decision, any information that can be inferred from the data is relevant, and ideally the metadata should contain:
+To train a historical Dutch language model the corpus balance, bias, and representiveness of the training data have to be carefully considered. 
+<!--- You say that the data has to be balanced, but try to briefly explain why --->
+To create a model that is representative of historical Dutch in a broad sense, it is important that the training data is diverse in terms of domain, genre, topic, authors, style, and time period. 
+<!--- How is domain different from genre? --->
+To make an informed decision, any information that can be inferred from the data is relevant, and ideally the metadata should contain:
+<!--- Are these guidelines for training data? As in, are you telling people to ideally only include data for which this information is available? Or are you telling people who compile corpora what sort of meta-data they should include so that there data can be used for pre-training? Perhaps you should be explicit about this? --->
 - Time period
 - Language domain / genre / style (news paper, parlementairy etc.)
 - Size (number of tokens, sentences, files, and data size)
@@ -108,14 +118,18 @@ To train a historical Dutch language model the corpus balance, bias, and represe
 - URL / DOI
 - License
 
-Available training data often consists of data sets with different data quality. How to deal with this depend on the model task. It might make sense to train models with multiple sizes of lower quality data. However, if the model is trained on lower quality data, will the output be of sufficient quality? On the other hand, lower quality training data may also help with messy data.
+Available training data often consists of data sets with substantial differences in data quality.
+<!--- Could you give an example? --->
+How to deal with these quality differences depends on the model task. It might make sense to train models with multiple sizes of lower quality data, but it is not clear whether this is an acceptable solution. On the one hand, a model trained on lower quality data may produce output that is of insufficient quality. On the other hand, lower quality training data may also be beneficial, as the target data is often equally messy.
 
-Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without cooyright restrictions.
+Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without copyright restrictions.
 
 
 ### 1.2. Available corpora
 
 Listed in the table below is a non-exhaustive number of available corpora (in alphabetical order) that can be considered for creating historical Dutch transformer models.
+
+<!--- SoNaR is not a historical corpus. I also wouldn't consider Europarl historical, as the earliest texts only go back to 1996. Please define 'historical'. Do you really mean 'historical', or just 'diachronic'? --->
 
 | Title | License | Period | Genre | Size | Reference |  Comments|
 |-|-|-|-|-|-|-|
