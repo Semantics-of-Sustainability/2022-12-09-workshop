@@ -153,27 +153,26 @@ Listed in the table below is a non-exhaustive number of available corpora (in al
 ---
   
 
-## 2. What are suitable model architectures and sizes?
+## 2. Which model architectures and sizes are suitable?
 
 Since the introduction of Transformer-based language models like BERT (Devlin et al., 2019), numerous model variations based on similar architectures have been developed.
-Despite the various differences between Bert, RoBerta (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), pracitioners oftentimes do not see noticable differences originating from choosing one of those flavours over the other.
+Despite the various differences between Bert, RoBerta (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), pracitioners oftentimes do not see noticable differences originating from choosing one variant over the other.
 
-The performance of a language model depends on many aspects that are not related to its architecture, most importantly the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021).
-Training large language models is expensive, so the potential benefits of finding the optimal architecture as well as hyper-parameter optimization are generally not expected to be worth the additional costs.
-Consequently, for instance the developers of GysBert (Manjavacas Arevalo & Fonteyn, 2022), have chosen to "closely follow the BERT-base uncased" architecture.
-
-Another argument for applying established methods, rather than today's state-of-the-art is the long development time: the entire process from data collection via implementation and training can take several years.
-During that time new best-performing architectures may have been developed, while flaws in currently popular architectures might be uncovered.
+For a few reasons, it may be worth simply sticking to established methods and architectures rather than the latest state-of-the-art. First, the performance of a language model depends on many aspects that are not related to its architecture, such as the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021). Furthermore, because training large language models is expensive, the potential benefits of finding the optimal architecture as well as hyper-parameter optimization are generally not expected to be worth the additional costs. As such, existing historical language models such as Dutch GysBERT (Manjavacas Arevalo & Fonteyn, 2022) and English MacBERTh (Manjavacas Arevalo & Fonteyn, 2021) have been created by "closely follow the BERT-base uncased" architecture. However, there are plans to create at least a cased version of these models, which is expected to be beneficial for tasks such as Named Entity Recognition (NER). We will briefly discuss what sort of pre-processing could help optimize the quality of historical (Dutch) language models in Section 2.1.
+Finally, it is also relevant to take development time into account: the entire process from data collection via implementation and training can take several years. During that time new best-performing architectures may have been developed, while flaws in currently popular architectures might be uncovered.
+<!--- I don't really understand what point you're trying to make with this last argument. So because things develop really fast it's better to work with something that isn't sota? Can you develop that argument more? And if this is what is addressed in subsection 2.2, this should be made explicit.--->
 
 Finding a suitable architecture can be approached more pragmatically by looking for previous approaches with similar requirements.
-For instance, have there models been trained for similar use cases and/or on similar data in terms of domain, size etc.?
-If they have had good results, a similar architecture should be a good choice.
+It is likely that models have been trained for similar use cases and/or on similar data in terms of domain, size and historical period.
+If they have had good results, it may be worth considering a similar architecture, or even re-using the model.
+<!--- Why a similar archiecture? Why not just reuse the model? --->
 
-In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly? Part 5 below elaborates on this point.
+<!--- Here, your version of this draft says "In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly? Part 5 below elaborates on this point.". I don't understand why it says 'however', because there is no contrast with the previous statement, and the comment about the temporal dimension also comes out of the blue. --->
 
 Another direction relevant in future research points towards models developed for applications outside of NLP.
-Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodel models.
-However, the specific method of adding noise as implemented in Stable Diffusion, is not directly transferable to text data.
+Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodal models.
+However, the specific method of adding noise as implemented in Stable Diffusion is not directly transferable to text data.
+<!--- This idea also has to be developed further, or it shouldn't be mentioned at all. --->
 
 ### 2.1. Pre-processing and Tokenization
 
