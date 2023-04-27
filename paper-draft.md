@@ -176,39 +176,46 @@ However, the specific method of adding noise as implemented in Stable Diffusion 
 
 ### 2.1. Pre-processing and Tokenization
 
-As outlined above, factors other than the model architecture play important roles for the performance of a language model.
+The performance of a language model depends, for a large part, on how its training data is prepared.
 For one, the choice of the tokenization in terms of both design and size seems to be important, whereas there has been little specific research on the impact of different tokenizers on downstream tasks.
+<!--- Seems to be important? Says who? Can you cite some work here that shows this? --->
 Intuitively, it seems clear though that a tokenizer introduces a specific kind of bias by producing a specific set of tokens on which a model is trained.
+<!--- Please explain this properly with an example --->
 
 Xue et al. (2022) demonstrate that token-free, "byte-level models are competitive with their token-level counterparts", and "characterize the trade-offs in terms of parameter count, training FLOPs, and inference speed."
 Clark et al. (2022) tackle the "linguistic pitfalls of tokenization" with a character-based, token-free tokenization approach.
+<!--- This needs to be developed more --->
 
+#### 2.1.1 Normalizing spelling
 Normalization in the pre-processing pipeline is a related aspect.
 Especially historic texts, oftentimes digitized automatically through optical character recognition (OCR) or handwritten text recognition (HTR), typically contain numerous errors.
-Apart from OCR and HTR errors, spelling variations are very common in historic texts.
-Spelling rules for Dutch have been established only in 1888, and changed several times since.
-Before that, variations are even larger; for instance, capitalization was not consistent and different regions and time periods used to spell according to their own standards.
+Apart from OCR and HTR errors, spelling variation is very common in historic texts. For Dutch, the basis for the official spelling rules was designed by Mathijs Siegenbeek as late as 1804 (Van der Wal & van Bree, 2008), and after that the Dutch spelling system has also been revised on multiple occassions . Before that, capitalization was not consistent and different regions and time periods used to spell according to their own standards. This means that, especially in texts pre-dating the 19th century, even common words (e.g. _onnozel_) could be spelled in multiple ways:
 
-However, practitioners advice against normalization of input text before training a language model, because that also removes the model's robustness against variations that occur in unseen texts.
-At the same time, (semi-)automatically removing gargabe, as opposed to variation, does have a positive impact on the model.
+zynen zoon, zoo oopentlyk _onnoozel_ ('his son, so openly innocent'; P.C. Hooft, 1642)
+als Godts _onnosel_ Lam ('like God's innocent lamb'; J. Cats, 1657)
 
-Dealing with historic language data includes a specific aspect: almost all larger datasets for Dutch have already been digitized.
-Therefore, new data is unlikely to appear in the foreseeable future -- although its quality might improve for instance through improved OCR and HTR technology.
+Given such variation, the question arises whether the spelling in the input training data should be normalized. Practitioners advice against this for several reasons. First, a practical consideration is that reducing spelling variation through normalization negatively affects the model's robustness against the orthographic variation that will likely be present in historical texts that were not part of the training corpus. Second, genuine spelling variation (i.e. variant spellings of words that are not introduced because of OCR or HTR errors) is in fact socially meaningful (Nguyen & Grieve 2020) and may, in the case of historical text, encode sociolinguistically relevant information about the author (e.g. regional background, social class, etc.). If it is possible to (semi-)automatically remove orthographic noise (e.g. by refraining from using notoriously 'dirty' OCR text in training) while maintaining any genuine variation, the quality of the model will be positively affected.
 
+Because almost all larger datasets for Dutch have already been digitized, new data is unlikely to appear in the foreseeable future. It is possible, however, that the quality of large databases (e.g. Delpher) improves in the future through improved OCR and HTR technology.
+<!--- I have no idea what "Dealing with historic language data includes a specific aspect" means, so I removed it. I also wonder what this comment on the exhaustiveness of digitization is doing here. Is this the most optimal place to put it, in terms of text structure? --->
+
+#### 2.1.1 Representativeness of training data
 In order to get a sense for the data requirements for specific tasks or domains, it is important to understand of the specifics of the data to be used:
 
 - How homogenous is the data?
 - Which domain(s) does it cover?
 - What task(s) should the model solve?
 
-Quality measures such as perplexity, lexical variation, and stylistic variation can help understanding the distribution and homogenity of the data.
+Quality measures such as perplexity (to detect text with problematic OCR/HTR), lexical variation, and stylistic variation can help with understanding the distribution and homogenity of the data.
+
+<!--- As with the extensive discussion on spelling variation, please explain _why_ lexical and stylistic variation are important. Also note that two things are discussed here: (1) how messy the text is in terms of orthography and (2) whether balance should be created in a training corpus. Please indicate more clearly in the text that these are two different considerations. I added subheadings to make this clearer. The link between lexical diversity and tokenization should also be explained better. --->
 
 Conneau et al. (2020) investigate the impact of data distribution, particularly considering low-resource languages in the context of multi-lingual models, showing ways to train performant models effectively even for languages and/or domains for which little data is available.
 
 ### 2.2. Computation
 
-Computational costs for training a model fluctuates heavily, again depending on specifics of model architecture and input data size.
-The latter is especially relevant, as pointed out by Kaplan et al., 2020.
+Computational costs for training a model fluctuate heavily, again depending on specifics of model architecture and input data size.
+The latter is especially relevant, as pointed out by Kaplan et al. (2020).
 They also analyse other aspects and inter-dependent factors regarding their respective impact on model training times and costs.
 
 Smaller input data sets can likely be handled by, for instance, university-owned GPU machines and smaller-scale clusters.
@@ -474,6 +481,8 @@ Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “MacBERTh: Development and Ev
 
 Manjavacas Arevalo, Enrique, and Lauren Fonteyn. “Non-Parametric Word Sense Disambiguation for Historical Languages.” In Proceedings of the 2nd International Workshop on Natural Language Processing for Digital Humanities, 123–34. Taipei, Taiwan: Association for Computational Linguistics, 2022. https://aclanthology.org/2022.nlp4dh-1.16.
 
+Nguyen, Dong and Jack Grieve. Do Word Embeddings Capture Spelling Variation?. In Proceedings of the 28th International Conference on Computational Linguistics, pages 870–881, Barcelona, Spain (Online). International Committee on Computational Linguistics, 2020. https://aclanthology.org/2020.coling-main.75/
+
 Rombach, Robin, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. “High-Resolution Image Synthesis with Latent Diffusion Models.” arXiv, April 13, 2022. https://doi.org/10.48550/arXiv.2112.10752.
 
 Rosin, Guy D., and Kira Radinsky. “Temporal Attention for Language Models.” arXiv, May 3, 2022. http://arxiv.org/abs/2202.02093.
@@ -489,6 +498,8 @@ Su, Peng and Vijay-Shanker, K. “Investigation of improving the pre-training an
 Suárez, Pedro Javier Ortiz, Benoît Sagot, and Laurent Romary. “Asynchronous pipeline for processing huge corpora on medium to low resource infrastructures.” 7th Workshop on the Challenges in the Management of Large Corpora (CMLC-7). Leibniz-Institut für Deutsche Sprache, 2019. https://doi.org/10.14618/IDS-PUB-9021  
 
 Van der Wees, Marlies. “What’s in a Domain? Towards Fine-Grained Adaptation for Machine Translation”. PhD thesis, Universiteit van Amsterdam, 2017.
+
+Van der Wal, Marijke & van Bree, Cor. "Geschiedenis van het Nederlands". Houten: Spectrum, 2008.
 
 Wevers, Melvin and Marijn Koolen. “Digital begriffsgeschichte: Tracing semantic change using word embeddings. Historical Methods.” Historical Methods: A Journal of Quantitative and Interdisciplinary History 53, no. 4 (May 13, 2020): 226–243. https://doi.org/10.1080/01615440.2020.1760157
 
