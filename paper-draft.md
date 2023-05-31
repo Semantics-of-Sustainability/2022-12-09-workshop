@@ -91,7 +91,7 @@ The rise of transformer language models such as [BERT](https://arxiv.org/abs/181
 ## 1. Which corpora are suitable to base Dutch historical language models on?
 
 There are various Dutch text sources available to train language models, including books, book reviews, news sources, Wikipedia, and Twitter. Yet, if a trained language model will be used to analyse historical texts or to answer questions related to language over different historial time frames, the training corpus should meet specific requirements. In this section, we discuss what should be taken into account when training historical Dutch language models. 
-<!--- (Or even shorter: "In this section, we discuss those requirements") --->
+
 
 ### 1.1. Corpus properties
 
@@ -122,7 +122,8 @@ Available training data often consists of data sets with substantial differences
 <!--- Could you give an example? --->
 How to deal with these quality differences depends on the model task. It might make sense to train models with multiple sizes of lower quality data, but it is not clear whether this is an acceptable solution. On the one hand, a model trained on lower quality data may produce output that is of insufficient quality. On the other hand, lower quality training data may also be beneficial, as the target data is often equally messy.
 
-Even when there is suffient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without copyright restrictions.
+Even when there is sufficient data available, the accompanying licence needs to be carefully evaluated. Some available corpora have licenses that give the user a lot of freedom. Other data is allowed to be accessed, but not redistributed. Corpora may also contain both data with and without copyright restrictions.
+
 
 
 ### 1.2. Available corpora
@@ -156,7 +157,13 @@ Listed in the table below is a non-exhaustive number of available corpora (in al
 ## 2. Which model architectures and sizes are suitable?
 
 Since the introduction of Transformer-based language models like BERT (Devlin et al., 2019), numerous model variations based on similar architectures have been developed.
-Despite the various differences between Bert, RoBerta (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), pracitioners oftentimes do not see noticable differences originating from choosing one variant over the other.
+
+
+Despite the various differences between BERT, RoBERTa (Liu et al., 2019) and their many other derivations (e.g. He et al., 2021), practitioners oftentimes do not see noticable differences originating from choosing one of those flavours over the other.
+
+The performance of a language model depends on many aspects that are not related to its architecture, most importantly the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021).
+Training large language models is expensive, so the potential benefits of finding the optimal architecture as well as hyper-parameter optimization are generally not expected to be worth the additional costs.
+Consequently, for instance the developers of GysBERT (Manjavacas Arevalo & Fonteyn, 2022), have chosen to "closely follow the BERT-base uncased" architecture.
 
 For a few reasons, it may be worth simply sticking to established methods and architectures rather than the latest state-of-the-art. First, the performance of a language model depends on many aspects that are not related to its architecture, such as the input data and the specifics of a downstream task (Manjavacas Arevalo & Fonteyn, 2021). Furthermore, because training large language models is expensive, the potential benefits of finding the optimal architecture as well as hyper-parameter optimization are generally not expected to be worth the additional costs. As such, existing historical language models such as Dutch GysBERT (Manjavacas Arevalo & Fonteyn, 2022) and English MacBERTh (Manjavacas Arevalo & Fonteyn, 2021) have been created by "closely follow the BERT-base uncased" architecture. However, there are plans to create at least a cased version of these models, which is expected to be beneficial for tasks such as Named Entity Recognition (NER). We will briefly discuss what sort of pre-processing could help optimize the quality of historical (Dutch) language models in Section 2.1.
 Finally, it is also relevant to take development time into account: the entire process from data collection via implementation and training can take several years. During that time new best-performing architectures may have been developed, while flaws in currently popular architectures might be uncovered.
@@ -169,10 +176,12 @@ If they have had good results, it may be worth considering a similar architectur
 
 <!--- Here, your version of this draft says "In the context of historic language models, however, another important question is: should the temporal aspect be encoded into the model explicitly? Part 5 below elaborates on this point.". I don't understand why it says 'however', because there is no contrast with the previous statement, and the comment about the temporal dimension also comes out of the blue. --->
 
+
 Another direction relevant in future research points towards models developed for applications outside of NLP.
 Stable Diffusion (Rombach et al., 2022) is a generative text-to-image model; techniques developed there could be adapted for (application-specific) language modelling and/or multimodal models.
 However, the specific method of adding noise as implemented in Stable Diffusion is not directly transferable to text data.
 <!--- This idea also has to be developed further, or it shouldn't be mentioned at all. --->
+
 
 ### 2.1. Pre-processing and Tokenization
 
@@ -194,7 +203,12 @@ Apart from OCR and HTR errors, spelling variation is very common in historic tex
 
 zynen zoon, zoo oopentlyk _onnoozel_ ('his son, so openly innocent'; P.C. Hooft, 1642)
 
+
 als Godts _onnosel_ Lam ('like God's innocent lamb'; J. Cats, 1657)
+
+However, practitioners advice against normalization of input text before training a language model, because that also removes the model's robustness against variations that occur in unseen texts.
+At the same time, (semi-)automatically removing garbage, as opposed to variation, does have a positive impact on the model.
+
 
 
 Given such variation, the question arises whether the spelling in the input training data should be normalized. Practitioners advice against this for several reasons. First, a practical consideration is that reducing spelling variation through normalization negatively affects the model's robustness against the orthographic variation that will likely be present in historical texts that were not part of the training corpus. Second, genuine spelling variation (i.e. variant spellings of words that are not introduced because of OCR or HTR errors) is in fact socially meaningful (Nguyen & Grieve 2020) and may, in the case of historical text, encode sociolinguistically relevant information about the author (e.g. regional background, social class, etc.). If it is possible to (semi-)automatically remove orthographic noise (e.g. by refraining from using notoriously 'dirty' OCR text in training) while maintaining any genuine variation, the quality of the model will be positively affected.
@@ -222,10 +236,10 @@ The latter is especially relevant, as pointed out by Kaplan et al. (2020).
 They also analyse other aspects and inter-dependent factors regarding their respective impact on model training times and costs.
 
 Smaller input data sets can likely be handled by, for instance, university-owned GPU machines and smaller-scale clusters.
-However, they often are too slow (and overloaded) to train large-scale models such as GysBert (Manjavacas Arevalo & Fonteyn, 2022).
+However, they often are too slow (and overloaded) to train large-scale models such as GysBERT (Manjavacas Arevalo & Fonteyn, 2022).
 
 Commercial services can handle those large workloads, but are expensive.
-The costs of using a TPU machine as provided by the Google Cloud Engine can sum up to thousand of Euros during the course the approximate duration of training a large-scale language model, which can take several week.
+The costs of using a TPU machine as provided by the Google Cloud Engine can sum up to thousand of Euros during the course the approximate duration of training a large-scale language model, which can take several weeks.
 These costs might decrease in the future, while computation speed might increase.
 Anyway, training a large-scale language model using commercial offerings is too expensive for the budget of many research projects.
 
@@ -236,9 +250,11 @@ In the context of this project (Semantics of Sustainability), the NL eScience Ce
 
 ## 3.	What are (dis)advantages of pre-training vs. fine-tuning?
 
+
 Learning in most of NLP systems consists of two levels of training. First a Language Model (LM) with millions of parameters is trained on a large unlabeled corpus. Then the representations that are trained in the pretrained model are used in supervised learning for a downstream task, with optional updates (fine-tuning) of the representations and network from the first stage [2]. This raises the question whether a language model should be trained from scratch, or whether an existing model can be fine-tuned (or applied) to reach our goals. 
 <!--- Pre-training from scratch relevant in an earlier section, but it is not explained until here. The order of the various sections may have to be rethought. --->
 To address this question, we describe four different scenarios and analyze their costs and benefits based on the following aspects:
+
 
 -	Generalizable – Performance on different downstream tasks
 -	Required time and resources
@@ -251,6 +267,7 @@ To address this question, we describe four different scenarios and analyze their
 This is a domain specific pretraining which leads to a performance gain in related downstream tasks [2]. 
 <!--- Try to explain what that means more by giving examples. --->
 However, it requires a large amount of in-domain data as well as computational resources and time.
+
 
 There are two types of BERT models adapted for a specific domain. In the first type a model is pre-trained with whole-word masking from scratch using domain-specific corpus. Second type of models are pre-train based on the original BERT model using the corpus of that specific domain [1]. Experiments in [1] shows the performance of the former type in most of downstream tasks was better than the latter.
 <!--- Cite sources to back up the latter point. WHich experiments? By whom? --->
@@ -280,6 +297,7 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
 <!--- Has this been tested by anyone? Please cite. Otherwise, explicitly state that the authors are not aware of anyone testing this. That begs the question why we think it might yield performance improvements, so this should be explained too. --->
 
 
+
 ### 3.2. Available pretrained models
 - Historical English
     - MacBERTh (Manjavacas & Fonteyn, 2021)
@@ -297,15 +315,16 @@ A pre-trained model can be fine- tuned for diverse downstream tasks via supervis
 <!--- There are other historical BERT models for Latin, Italian, French, etc. Should these be listed? Also, there are other pre-trained models that aren't BERT/Transformer-based. I think there's an ELMo model for English used to automatically parse texts (with the PENN parsed data as input), though I'm not sure whether it has been released. https://par.nsf.gov/servlets/purl/10340101 Should these be mentioned? --->
 
 
+
 ### 3.3. Miscellaneous notes and brainstorming ideas:
-- Training from scratch if we have enough data, time, and ressources
-- If we don't have enough data, time and ressources -> fine-tuning
+- Training from scratch if we have enough data, time, and resources
+- If we don't have enough data, time and resources -> fine-tuning
 - Pretraining does not require *labeled* data but it might benefit from weak supervision (see Whisper in audio-to-text domain)
-- Evidence from MacBerth and GysBert: Pretrained models perform better than finetuned models on historical data
+- Evidence from MacBERTh and GysBERT: Pretrained models perform better than finetuned models on historical data
 - Fine-tune pretrained models for downstream tasks
 - Contextual language models should account for spelling variations across historical periods
 - Transfer distance between pretraining domain and downstream domain should be not too large
-- Tip: use stable widely used model architectures (for example: Bert)
+- Tip: use stable widely used model architectures (for example: BERT)
 - Tip: when training a new model, aim for a release of the model on huggingface.com
 - general language model "knows" the world outside the research corpus
     - (when) is external world knowledge desirable?
@@ -329,7 +348,7 @@ Third, we use the model to find a semantic shift "in the wild". We suggest ways 
 
 ### 4.1. Model goodness of fit 
 To compare the estimated model to existing language models, the first option is to calculate the model perplexity: the probability distribution for a word in a particular sentence, conditional on the preceding words. 
-The perplexity can then be compared to other models. A challenge is that model perplexities are only comparable for models with the same vocabulary, and are only applicable to models with normalized proability distributions ([Chen, Beeferman, Rosenfeld](https://www.cs.cmu.edu/~roni/papers/eval-metrics-bntuw-9802.pdf)).
+The perplexity can then be compared to other models. A challenge is that model perplexities are only comparable for models with the same vocabulary, and are only applicable to models with normalized probability distributions ([Chen, Beeferman, Rosenfeld](https://www.cs.cmu.edu/~roni/papers/eval-metrics-bntuw-9802.pdf)).
 
 The second option is to assess whether the model performs common NLP tasks equally well as other models. Example tasks include filling in the blanks, zero-shot-classification (for instance, classify the sentiment of a given sentence), sentence similarity, and finding the odd item in a list.
 
@@ -416,11 +435,13 @@ The majority of large language models are trained on present-day data. This make
 
 ### 5.1. What is change?
 
+
 The first of this considerations is: what do we mean by change? Large language models are able to capture change on two levels: the conceptual or semantic and the linguistic level. 
 <!--- On the distinction between these two levels, also see https://ceur-ws.org/Vol-2989/long_paper26.pdf and https://arxiv.org/pdf/1606.02821.pdf --->
 Change on the linguistic level includes orthographic change (how a word is spelled) and grammatical change (how a word is used in a sentence, for example, as an adjective, noun or verb). 
 <!--- A distinction was made in the original text between grammatical change, defined as how a word is written, and syntactic change. This is terminologically quite awkward. First of all, syntax is an aspect of grammar. Second, grammar is about much more than how a word is written. In fact, how a word is written is one of the few thing we wouldn't consider grammar. --->
 We can define conceptual change in terms of the onomasiological and semasiological dimensions of concepts (Geeraerts 2010: 27), where the first describes the different representations or manifestations of a concept and the second its different meanings or uses. The two are interrelated, as the following example may clarify. The concept of 'propaganda' has long been a neutral term that was related to 'advertisement'. This changed during the Cold War, with the result that propaganda now has a clear political connotation, related to words like 'proclamation' or 'campaign' more than to 'publicity' or 'commercial'. These semantically related terms constitute the onomasiological dimension of the change in meaning of the term 'propaganda', its increasing political connotation its semasiological one. Research can both focus on onomasiological change, or how the manifestations of a particular concept change over time (like 'advertisement', of which 'propaganda' should - at least in English or Dutch - be an adequate manifestion before WWII, but not anymore), or on semasiological change, or the semantic internal change of a word. Here, Geeraerts distinguishes between the changes of the denotional, referential or connotational meaning of a word (Geeraerts 2010: 26ff).  
+
 
 To be sure: there are more ways to study conceptual change. An important dimension is the *Pragmatik* that Koselleck distinguishes besides *Semantik*, *Syntax* and *Grammatik* (Koselleck 2006). This aspect of meaning and its change has clear parallels to Skinner's stress on intentionality and context (Skinner 1969). However, these dimensions are out of reach for large language models, because they require a hermeneutical access to the original texts that underly these models.
 
